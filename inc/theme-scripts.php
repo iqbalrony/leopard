@@ -57,7 +57,7 @@ class LPRD_Enqueue_Scripts {
 		/**
 		 * Load All jQuery Library
 		 */
-		wp_enqueue_script( 'leopard-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
+		wp_enqueue_script( 'leopard-navigation', get_template_directory_uri() . '/assets/js/navigation.js', array(), _S_VERSION, true );
 
 
 		// Add leopard-main js library

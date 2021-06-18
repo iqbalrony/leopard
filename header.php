@@ -25,22 +25,52 @@
 
 <a class="skip-link screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'leopard' ); ?></a>
 
-<header id="masthead" class="site-header">
+<header id="masthead" class="lprd-header-area site-header">
 	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
+		<div class="row justify-content-between align-items-center">
+			<div class="col-4">
 				<div class="site-branding">
-					<?php the_custom_logo(); ?>
-					<!-- <h1 class="site-title"><a href="<?php //echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php //bloginfo( 'name' ); ?></a></h1> -->
+					<?php
+					the_custom_logo();
+					if ( is_front_page() && is_home() ) :
+						?>
+						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+						<?php
+					else :
+						?>
+						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+						<?php
+					endif;
+					$leopard_description = get_bloginfo( 'description', 'display' );
+					if ( $leopard_description || is_customize_preview() ) :
+						?>
+						<p class="site-description"><?php echo $leopard_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div>
-			<div class="col-md-8">
-				<nav id="site-navigation" class="main-navigation">
-					<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'leopard' ); ?></button>
+			<div class="col-8">
+
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu-alt2"></span></button>
+				<nav class="main-navigation desktop-menu">
+
 					<?php
 					wp_nav_menu(
 						array(
-							'theme_location' => 'menu-1',
+							'theme_location' => 'primary',
+							'menu_id'        => 'primary-menu',
+						)
+					);
+					?>
+				</nav><!-- #site-navigation -->
+			</div>
+			<div class="col-12">
+
+				<nav id="site-navigation" class="main-navigation hidden-mobile">
+
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'primary',
 							'menu_id'        => 'primary-menu',
 						)
 					);

@@ -38,7 +38,7 @@ if ( ! function_exists( 'leopard_setup' ) ) {
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
-				'menu-1' => esc_html__( 'Primary', 'leopard' ),
+				'primary' => __( 'Primary Menu', 'leopard' ),
 			)
 		);
 
@@ -130,3 +130,31 @@ function leopard_widgets_init() {
 	));
 }
 add_action( 'widgets_init', 'leopard_widgets_init' );
+
+
+// add_action( 'after_switch_theme',  'ajx_theme_locations_rescue' );
+function ajx_theme_locations_rescue() {
+   // bug report / support: http://www.unsalkorkmaz.com/
+   // We got old theme's slug name
+   $old_theme = get_option( 'theme_switched' );
+   // Getting old theme's settings
+   $old_theme_mods = get_option("theme_mods_{$old_theme}");
+   // Getting old theme's theme location settings
+   $old_theme_navs = $old_theme_mods['nav_menu_locations'];
+   // Getting new theme's theme location settings
+   $new_theme_navs = get_theme_mod( 'nav_menu_locations' );
+
+   // If new theme's theme location is empty (its not empty if theme was activated and set some theme locations before)
+   if (!$new_theme_navs) {
+	   // Getting registered theme locations on new theme
+	   $new_theme_locations = get_registered_nav_menus();
+
+	   foreach ($new_theme_locations as $location => $description ) {
+		   // We setting same nav menus for each theme location
+		   $new_theme_navs[$location] = $old_theme_navs[$location];
+	   }
+
+	   set_theme_mod( 'nav_menu_locations', $new_theme_navs );
+
+   }
+}
