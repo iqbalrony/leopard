@@ -28,42 +28,23 @@
 <header id="masthead" class="lprd-header-area site-header">
 	<div class="container">
 		<div class="row justify-content-between align-items-center">
-			<div class="col-4">
+			<div class="col-lg-4 col-md-6 col-8">
 				<div class="site-branding">
 					<?php
-					the_custom_logo();
-					if ( is_front_page() && is_home() ) :
-						?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-						<?php
+					if( get_custom_logo() ):
+						the_custom_logo();
 					else :
-						?>
-						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-						<?php
-					endif;
-					$leopard_description = get_bloginfo( 'description', 'display' );
-					if ( $leopard_description || is_customize_preview() ) :
-						?>
+						$leopard_description = get_bloginfo( 'description', 'display' );
+					?>
+						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
 						<p class="site-description"><?php echo $leopard_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div>
-			<div class="col-8">
-
+			<div class="col-lg-6 col-md-6 col-4 menu-toggle-area">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu-alt2"></span></button>
-				<nav class="main-navigation desktop-menu">
-
-					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'primary',
-							'menu_id'        => 'primary-menu',
-						)
-					);
-					?>
-				</nav><!-- #site-navigation -->
 			</div>
-			<div class="col-12">
+			<div class="col-lg-8 col-md-6 col-12">
 
 				<nav id="site-navigation" class="main-navigation hidden-mobile">
 
@@ -72,6 +53,7 @@
 						array(
 							'theme_location' => 'primary',
 							'menu_id'        => 'primary-menu',
+							'menu_class' => 'lprd-menu menu nav-menu',
 						)
 					);
 					?>
