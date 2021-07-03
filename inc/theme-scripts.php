@@ -24,7 +24,7 @@ class LPRD_Enqueue_Scripts {
 		wp_enqueue_style('bootstrap', get_template_directory_uri() . '/assets/css/bootstrap.min.css', array(), null);
 
 		// // Fontawesome V4 stylesheet.
-		// wp_enqueue_style('fontawesome-4', get_template_directory_uri() . '/assets/css/font-awesome.min.css', array(), null);
+		wp_enqueue_style('fontawesome-5', get_template_directory_uri() . '/assets/css/all.min.css', array(), null);
 
 		// // material-design-icons stylesheet.
 		// wp_enqueue_style('materialdesignicons', get_template_directory_uri() . '/assets/css/materialdesignicons.min.css', array(), null);
@@ -49,7 +49,7 @@ class LPRD_Enqueue_Scripts {
 		// wp_style_add_data( 'leopard-style', 'rtl', 'replace' );
 
 		// Add responsive stylesheet
-		// wp_enqueue_style('leopard-responsive', get_template_directory_uri() . '/assets/css/responsive.css', array(), null);
+		wp_enqueue_style('leopard-responsive', get_template_directory_uri() . '/assets/css/responsive.css', array(), null);
 
 
 

@@ -1,4 +1,38 @@
 <?php
+
+
+
+
+/**
+ * Body Custom Class
+ */
+if (!function_exists('lprd_add_body_class')) {
+	add_filter('body_class', 'lprd_add_body_class');
+	function lprd_add_body_class( $classes ) {
+
+		if ( is_active_sidebar('sidebar-1') ) {
+			$classes[] = 'lprd-sidebar-enable';
+		}
+
+		return $classes;
+	}
+}
+
+/**
+ * Add content to the 404 page
+ *
+ */
+add_action('lprd_404_page_content_markup', 'lprd_404_page_content');
+function lprd_404_page_content() {
+	$text_1 = esc_html__('404', 'pawshop');
+	$text_2 = esc_html__('Oops! page not found.', 'pawshop');
+	$text_3 = esc_html__('Sorry, but the page you are looking for is not found. Please, make sure you have typed the current URL.', 'pawshop');
+	$text_4 = esc_url(home_url('/'));
+	$text_5 = esc_html__('Back to Home', 'pawshop');
+	echo sprintf('<div class="lprd-404-content"><h1>%1$s</h1><h2>%2$s</h2><p>%3$s</p><a class="lprd-default-btn lprd-404-btn" href="%4$s">%5$s<i class="fas fa-arrow-right"></i></a></div>', $text_1, $text_2, $text_3, $text_4, $text_5);
+}
+
+
 /**
  * Function for ekoo
  */
@@ -465,28 +499,6 @@ if (!function_exists('pws_breadcrumb_on_off')) {
 			$on_off = $pws_customizer;
 		}
 		return $on_off;
-	}
-}
-
-/**
- * Body Custom Class
- */
-if (!function_exists('pws_add_body_class')) {
-	add_filter('body_class', 'pws_add_body_class');
-	function pws_add_body_class($classes) {
-		$layout = pws_page_layout();
-		if ('left' == $layout && function_exists('is_shop') && !is_shop()) {
-			$classes[] = 'left_sidebar';
-		} elseif ('without' == $layout && !is_shop()) {
-			$classes[] = 'without_sidebar';
-		}
-		$shop_layout = get_theme_mod('pws_shop_layout', 'right');
-		if ('left' == $shop_layout && is_active_sidebar('pawshop-shop-sidebar') && function_exists('is_shop') && is_shop()) {
-			$classes[] = 'left_sidebar';
-		} elseif (('without' == $shop_layout || !is_active_sidebar('pawshop-shop-sidebar')) && function_exists('is_shop') && is_shop()) {
-			$classes[] = 'without_sidebar';
-		}
-		return $classes;
 	}
 }
 

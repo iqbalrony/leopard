@@ -24,6 +24,11 @@ require_once get_template_directory() . '/inc/theme-setup.php';
 require_once get_template_directory() . '/inc/theme-scripts.php';
 
 /**
+ * Theme Functions
+ */
+require get_template_directory() . '/inc/theme-functions.php';
+
+/**
  * Implement the Custom Header feature.
  */
 require get_template_directory() . '/inc/custom-header.php';
@@ -41,7 +46,8 @@ require get_template_directory() . '/inc/template-functions.php';
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
+// require get_template_directory() . '/inc/customizer.php';
+require get_template_directory() . '/inc/customizer/customizer.php';
 
 /**
  * Load Jetpack compatibility file.

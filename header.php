@@ -42,9 +42,9 @@
 				</div><!-- .site-branding -->
 			</div>
 			<div class="col-lg-6 col-md-6 col-4 menu-toggle-area">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu-alt2"></span></button>
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu"></span></button>
 			</div>
-			<div class="col-lg-8 col-md-6 col-12">
+			<div class="col-lg-8 col-md-12 col-12">
 
 				<nav id="site-navigation" class="main-navigation hidden-mobile">
 
@@ -57,6 +57,7 @@
 						)
 					);
 					?>
+					<button class="screen-reader-text lprd-menu-close"><i class="fas fa-times"></i></button>
 				</nav><!-- #site-navigation -->
 			</div>
 		</div>

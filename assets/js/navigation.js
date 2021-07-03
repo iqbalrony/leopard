@@ -5,13 +5,14 @@
  * navigation support for dropdown menus.
  */
  ( function() {
-	var container, button, menu, links, i, len;
+	var container, buttonClose, button, menu, links, i, len;
 
 	container = document.getElementById( 'site-navigation' );
 	if ( ! container ) {
 		return;
 	}
 
+	buttonClose = document.getElementsByClassName( 'lprd-menu-close' )[0];
 	button = document.getElementsByClassName( 'menu-toggle' )[0];
 	if ( 'undefined' === typeof button ) {
 		return;
@@ -40,6 +41,10 @@
       		button.setAttribute( 'aria-expanded', 'true' );
 
 		}
+	};
+
+	buttonClose.onclick = function() {
+		container.classList.add('hidden-mobile');
 	};
 
 	// Close small menu when user clicks outside

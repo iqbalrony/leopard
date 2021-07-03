@@ -11,9 +11,9 @@
 
 ?>
 
-<footer id="colophon" class="site-footer lprd_footer_section">
+<footer id="lprd-footer" class="site-footer lprd-footer-section">
 	<?php if (is_active_sidebar('leopard-footer-widget')): ?>
-		<div class="lprd_footer_widget_area">
+		<div class="lprd-footer-widget-area">
 			<div class="container">
 				<div class="row">
 					<?php dynamic_sidebar('leopard-footer-widget'); ?>
@@ -21,7 +21,7 @@
 			</div>
 		</div>
 	<?php endif; ?>
-	<div class="lprd_footer_copyright_area">
+	<div class="lprd-footer-copyright-area">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -35,7 +35,7 @@
 						<span class="sep"> | </span>
 							<?php
 							/* translators: 1: Theme name, 2: Theme author. */
-							printf( esc_html__( 'Theme: %1$s by %2$s.', 'leopard' ), 'leopard', '<a href="http://www.iqbalrony.com/">iqbalrony</a>' );
+							printf( esc_html__( 'Theme: %1$s by %2$s', 'leopard' ), 'leopard', '<a href="http://www.iqbalrony.com/">iqbalrony</a>' );
 							?>
 					</div><!-- .site-info -->
 				</div>

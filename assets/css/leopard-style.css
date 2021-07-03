@@ -57,6 +57,7 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 html {
+  font-size: 16px;
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
 }
@@ -394,8 +395,7 @@ select,
 optgroup,
 textarea {
   color: #404040;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  font-family: "Poppins", sans-serif;
   font-size: 1rem;
   line-height: 1.5;
 }
@@ -532,17 +532,18 @@ table {
 /* Links
 --------------------------------------------- */
 a {
-  color: #4169e1;
+  color: var(--color-malibu);
+  text-decoration: none;
 }
 
-a:visited {
-  color: #800080;
-}
+/* a:visited {
+  color: var(--color-outrageous-orange);
+} */
 
 a:hover,
 a:focus,
 a:active {
-  color: #191970;
+  color: var(--color-outrageous-orange);
 }
 
 a:focus {
@@ -561,7 +562,7 @@ input[type="button"],
 input[type="reset"],
 input[type="submit"] {
   border: 1px solid;
-  border-color: #ccc #ccc #bbb;
+  border-color: var(--color-french-gray);
   border-radius: 3px;
   background: #e6e6e6;
   color: rgba(0, 0, 0, 0.8);
@@ -573,7 +574,7 @@ button:hover,
 input[type="button"]:hover,
 input[type="reset"]:hover,
 input[type="submit"]:hover {
-  border-color: #ccc #bbb #aaa;
+  border-color: var(--color-french-gray);
 }
 
 button:active,
@@ -584,7 +585,7 @@ input[type="reset"]:active,
 input[type="reset"]:focus,
 input[type="submit"]:active,
 input[type="submit"]:focus {
-  border-color: #aaa #bbb #bbb;
+  border-color: var(--color-french-gray);
 }
 
 input[type="text"],
@@ -604,7 +605,7 @@ input[type="datetime-local"],
 input[type="color"],
 textarea {
   color: #666;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-french-gray);
   border-radius: 3px;
   padding: 3px;
 }
@@ -629,7 +630,7 @@ textarea:focus {
 }
 
 select {
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-french-gray);
 }
 
 textarea {
@@ -693,6 +694,10 @@ textarea {
 .main-navigation .desktop-menu {
 }
 
+button.screen-reader-text.lprd-menu-close:focus {
+	display: none;
+}
+
 /* nav.main-navigation.hidden-mobile {
   display: none;
 } */
@@ -700,10 +705,28 @@ textarea {
 .main-navigation .page_item_has_children > ul,
 .main-navigation .menu-item-has-children > ul {
   position: absolute;
-  border: 1px solid #dfdfdf;
+  /* border: 1px solid #dfdfdf; */
   position: absolute;
   top: -1000px;
-  z-index: 999999;
+  z-index: 99;
+
+  /* display: block;
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 57px;
+  z-index: 0; */
+  background-color: var(--color-white);
+  box-shadow: 0 25px 90px rgb(0 0 0 / 5%);
+  padding: 12px 0;
+  width: 230px;
+  text-align: left;
+  border-radius: 0 0 3px 3px;
+  border-top: 2px solid var(--color-malibu);
+  /* transform: translateX(-50%); */
+  /* -webkit-transition: visibility 0.3s ease, opacity 0.3s ease; */
+  /* transition: visibility 0.3s ease, opacity 0.3s ease; */
 }
 
 .main-navigation ul {
@@ -716,7 +739,12 @@ textarea {
 .main-navigation li {
   display: inline-block;
   position: relative;
+  /* margin: 0 10px; */
   text-align: left;
+}
+
+.main-navigation li:last-child {
+    margin-right: 0;
 }
 
 .main-navigation li.focus > ul,
@@ -731,24 +759,33 @@ textarea {
 
 .main-navigation li li.focus > ul,
 .main-navigation li li:hover > ul {
-  left: 100%;
+  right: 100%;
   top: 0;
 }
 
 .main-navigation a {
-  color: #000;
+	color: var(--color-trout);
+	text-transform: capitalize;
+	transition: all 0.4s ease 0s;
   text-decoration: none;
   display: block;
-  white-space: nowrap;
-  padding: 10px 15px;
+  /* white-space: nowrap; */
+  padding: 15px 20px;
+  font-size: 1rem;
+}
+
+.main-navigation li li a {
+  padding: 6px 15px;
 }
 
 .main-navigation a:hover,
 .main-navigation li:hover > a,
+.main-navigation li.focus > a,
 .main-navigation .current-menu-item > a,
 .main-navigation .current-menu-ancestor > a {
-  color: #0072b7;
+	color: var(--color-malibu);
 }
+
 
 .main-navigation .page_item_has_children > a::before,
 .main-navigation .menu-item-has-children > a::before {
@@ -770,12 +807,12 @@ textarea {
 
 .main-navigation .page_item_has_children .children,
 .main-navigation .menu-item-has-children .sub-menu {
-  background: #fff;
+  /* background: #fff; */
 }
 
 /* Small menu. */
-.menu-toggle-area{
-	display: none;
+.menu-toggle-area {
+  display: none;
 }
 .menu-toggle,
 .main-navigation.toggled ul {
@@ -939,20 +976,32 @@ textarea {
   position: relative;
   display: inline-block;
   margin-bottom: 15px;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--color-firefly);
   font-weight: 500;
   word-break: break-word;
 }
 
 .widget-title:after {
-  content: "";
+  /* content: "";
   height: 0;
   width: 70%;
   border-bottom: 2px dashed var(--color-malibu);
   position: absolute;
   left: 0;
-  bottom: -2px;
+  bottom: -2px; */
+
+  content: "-----";
+  position: absolute;
+  width: 49px;
+  left: 0;
+  bottom: -6px;
+  /* margin-top: 12px; */
+  color: transparent;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-malibu);
+  /* text-decoration-color: var(--color-outrageous-orange); */
 }
 
 .widget-title .rsswidget {
@@ -997,14 +1046,14 @@ textarea {
 
 .widget,
 .widget a {
-  color: var(--color-trout);
+  /* color: var(--color-trout); */
   font-size: 1rem;
   font-weight: 400;
   transition: all 0.5s;
 }
 
 .widget a:hover {
-  color: var(--color-malibu);
+  /* color: var(--color-malibu); */
 }
 
 .widget_rss li {
@@ -1164,6 +1213,28 @@ textarea {
   display: block;
 }
 
+/*==============================================
+			Common Css
+==============================================*/
+.lprd-default-btn {
+  display: inline-block;
+  overflow: hidden;
+  padding: 14px 25px;
+  width: auto;
+  cursor: pointer;
+  background-color: var(--color-trout);
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.867rem;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-porcelain);
+  transition: all 0.4s;
+}
+
 /*--------------------------------------------------------------
 # Plugins
 --------------------------------------------------------------*/
@@ -1263,24 +1334,113 @@ textarea {
   padding: 15px 0;
 }
 
+/*==============================================
+			Blog page
+==============================================*/
+.lprd-blog-page {
+  padding: 0 0 80px 0;
+}
+.lprd-default-page-container {
+  padding-right: 15px;
+}
+body.left_sidebar .lprd-default-page-container {
+  padding-right: 0;
+  padding-left: 15px;
+}
+body.without_sidebar .lprd-default-page-container {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+.lprd-default-page-container,
+.lprd-sidebar-border {
+  margin-top: 80px;
+}
+
+/*--------------------------------------------------------------
+# Sidebar
+--------------------------------------------------------------*/
+.lprd-sidebar-border {
+  overflow: hidden;
+  position: relative;
+}
+.lprd-sidebar-border:before {
+  content: "";
+  position: absolute;
+  border-left: 5px dashed var(--color-french-gray);
+  top: -1px;
+  bottom: -1px;
+  left: -4px;
+  right: -1px;
+  z-index: -1;
+}
+body.left-sidebar .lprd-sidebar-border:before {
+  border-left: 0;
+  border-right: 5px dashed var(--color-french-gray);
+  bottom: -1px;
+  left: -1px;
+  right: -4px;
+}
+.lprd-sidebar {
+  padding: 0 0 0 15px;
+}
+body.left_sidebar .lprd-sidebar {
+  padding: 0 15px 0 0;
+}
+.lprd-sidebar .widget:last-child {
+  margin-bottom: 0;
+}
+
+/*==============================================
+			404 css
+==============================================*/
+.lprd-blog-page.lprd-404-page {
+  padding: 80px 0;
+  height: 100vh;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+}
+.lprd-404-content h1 {
+  font-size: 300px;
+  line-height: 1;
+  text-shadow: 32.139px 38.302px 10px rgb(5 5 5 / 10%);
+  background-image: linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+  background-image: -webkit-linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+  background-image: -ms-linear-gradient(180deg, #bc9cff 0%, #8ba4f9 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  padding-bottom: 30px;
+  margin: 0;
+}
+a.lprd-default-btn.lprd-404-btn i {
+  margin-left: 5px;
+}
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
-.lprd_footer_section {
+.lprd-footer-section {
   background-color: var(--color-white-lilac);
   color: var(--color-trout);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  border-top: 1px solid rgba(143, 144, 160, 0.15);
-  padding: 30px 0 20px;
+}
+
+.lprd-footer-widget-area {
+  padding: 60px 0 0;
+}
+
+.lprd-footer-copyright-area {
+  border-top: 1px solid var(--color-french-gray);
+  padding: 30px 0;
 }
 
 /*--------------------------------------------------------------
 # Media Queries
 --------------------------------------------------------------*/
 @media all and (max-width: 768px) {
-  .site-header {
+  /* .site-header {
     padding: 0px;
   }
 
@@ -1291,9 +1451,6 @@ textarea {
   .menu-toggle {
     display: inline;
     float: right;
-    /* position: relative;
-    top: 25px;
-    right: 20px; */
   }
 
   .main-navigation {
@@ -1348,9 +1505,6 @@ textarea {
     z-index: 10000;
   }
 
-  /* .desktop-menu {
-    display: none !important;
-  } */
   .menu-toggle-area{
 	display: block;
   }
@@ -1374,12 +1528,12 @@ textarea {
   main,
   .pagelayer-content {
     width: 100% !important;
-  }
+  } */
 }
 
 @media all and (max-width: 599px) {
-  main,
+  /* main,
   .pagelayer-content {
     width: 100% !important;
-  }
+  } */
 }

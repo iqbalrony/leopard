@@ -11,7 +11,8 @@ if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 	return;
 }
 ?>
-
-<aside id="secondary" class="widget-area">
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
-</aside><!-- #secondary -->
+<div class="col-lg-4 offset-lg-0 col-md-10 offset-md-1 col-sm-12 offset-sm-0 lprd-sidebar-border">
+	<aside id="secondary" class="lprd-sidebar">
+		<?php dynamic_sidebar( 'sidebar-1' ); ?>
+	</aside><!-- #secondary -->
+</div>
