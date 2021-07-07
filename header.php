@@ -28,23 +28,21 @@
 <header id="masthead" class="lprd-header-area site-header">
 	<div class="container">
 		<div class="row justify-content-between align-items-center">
-			<div class="col-lg-4 col-md-6 col-8">
+			<div class="col-lg-3 col-md-6 col-8">
 				<div class="site-branding">
 					<?php
 					if( get_custom_logo() ):
 						the_custom_logo();
 					else :
-						$leopard_description = get_bloginfo( 'description', 'display' );
 					?>
 						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-						<p class="site-description"><?php echo $leopard_description; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div>
 			<div class="col-lg-6 col-md-6 col-4 menu-toggle-area">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu"></span></button>
 			</div>
-			<div class="col-lg-8 col-md-12 col-12">
+			<div class="col-lg-9 col-md-12 col-12">
 
 				<nav id="site-navigation" class="main-navigation hidden-mobile">
 
@@ -63,3 +61,16 @@
 		</div>
 	</div>
 </header><!-- #masthead -->
+
+<?php if( 'show' == get_theme_mod('lprd_breadcrumb_on_off', 'show') ):?>
+	<div class="lprd-breadcrumbs-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<?php echo lprd_breadcrumb_trail(); ?>
+					<?php lprd_breadcrumb(); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php endif;?>

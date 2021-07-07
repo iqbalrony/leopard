@@ -102,29 +102,20 @@ function leopard_general_settings_register($wp_customize) {
 			'sanitize_callback' => 'lprd_sanitize_select',
 		)
 	);
-	$wp_customize->add_control( new Leopard_Customize_Control_Radio_Image(
-			$wp_customize,
-			'lprd_page_layout',
-			array(
-				'label'    => esc_html__( 'Sidebars', 'leopard' ),
-				'description' => esc_html__( 'Choose sidebar from available layouts', 'leopard' ),
-				'section'  => 'lprd_layout_section',
-				'choices'  => array(
-					'left' => array(
-						'label' => esc_html__( 'Left Sidebar', 'leopard' ),
-						'url'   => '%s/assets/images/left-sidebar.png'
-					),
-					'right' => array(
-						'label' => esc_html__( 'Right Sidebar', 'leopard' ),
-						'url'   => '%s/assets/images/right-sidebar.png'
-					),
-					'without' => array(
-						'label' => esc_html__( 'Without Sidebar', 'leopard' ),
-						'url'   => '%s/assets/images/no-sidebar.png'
-					)
-				),
-				'priority' => 5
-			)
+
+	$wp_customize->add_control(
+		'lprd_page_layout',
+		array(
+			'type' => 'select',
+			'label'    => esc_html__( 'Sidebars', 'leopard' ),
+			'description' => esc_html__( 'Choose sidebar from available layouts', 'leopard' ),
+			'section' => 'lprd_layout_section',
+			'priority' => 10,
+			'choices' => [
+				'left' => esc_html__( 'Left Sidebar', 'leopard' ),
+				'right' => esc_html__( 'Right Sidebar', 'leopard' ),
+				'without' => esc_html__( 'Without Sidebar', 'leopard' ),
+			],
 		)
 	);
 

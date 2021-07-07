@@ -49,20 +49,18 @@ function leopard_breadcrumb_settings_register($wp_customize) {
 			'sanitize_callback' => 'lprd_sanitize_switch_option',
 		)
 	);
-	$wp_customize->add_control( new Leopard_Customize_Switch_Control(
-			$wp_customize,
-			'lprd_breadcrumb_on_off',
-			array(
-				'type'      => 'switch',
-				'label'     => esc_html__( 'Breadcrumb Area', 'leopard' ),
-				'description'   => esc_html__( 'Show/Hide option for breadcrumb.', 'leopard' ),
-				'section'   => 'lprd_breadcrumb_section',
-				'choices'   => array(
-					'show'  => esc_html__( 'Show', 'leopard' ),
-					'hide'  => esc_html__( 'Hide', 'leopard' )
-				),
-				'priority'  => 10,
-			)
+	$wp_customize->add_control(
+		'lprd_breadcrumb_on_off',
+		array(
+			'type' => 'select',
+			'label'     => esc_html__( 'Breadcrumb Area', 'leopard' ),
+			'description'   => esc_html__( 'Show/Hide option for breadcrumb.', 'leopard' ),
+			'section' => 'lprd_breadcrumb_section',
+			'priority' => 10,
+			'choices'   => array(
+				'show'  => esc_html__( 'Show', 'leopard' ),
+				'hide'  => esc_html__( 'Hide', 'leopard' )
+			),
 		)
 	);
 

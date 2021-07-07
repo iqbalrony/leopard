@@ -42,7 +42,7 @@ function leopard_hp_tmpl_settings_register($wp_customize) {
 	$wp_customize->add_setting(
 		'hero_sml_title',
 		array(
-			'default' => 'PawShop',
+			'default' => 'LprdShop',
 			'transport' => 'refresh',
 			'sanitize_callback' => 'lprd_sanitize_plain_text',
 		)

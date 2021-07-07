@@ -21,11 +21,11 @@ function leopard_customize_register($wp_customize) {
 	if (isset($wp_customize->selective_refresh)) {
 		$wp_customize->selective_refresh->add_partial('blogname', array(
 			'selector' => '.site-title a',
-			'render_callback' => 'pws_customize_partial_blogname',
+			'render_callback' => 'lprd_customize_partial_blogname',
 		));
 		$wp_customize->selective_refresh->add_partial('blogdescription', array(
 			'selector' => '.site-description',
-			'render_callback' => 'pws_customize_partial_blogdescription',
+			'render_callback' => 'lprd_customize_partial_blogdescription',
 		));
 	}
 
@@ -72,11 +72,11 @@ get_template_part('inc/customizer/custom-classes');         // Custom Classes
 get_template_part('inc/customizer/general-panel');          // General Settings
 get_template_part('inc/customizer/header-panel');          // Header Settings
 get_template_part('inc/customizer/breadcrumb-panel');      // breadcrumb Settings
-if (class_exists('WooCommerce')){
-	get_template_part('inc/customizer/shop-panel');      // shop Settings
-}
-get_template_part('inc/customizer/enu-color-panel');       	// menu color Settings
+// if (class_exists('WooCommerce')){
+// 	get_template_part('inc/customizer/shop-panel');      // shop Settings
+// }
+// get_template_part('inc/customizer/menu-color-panel');       	// menu color Settings
 get_template_part('inc/customizer/footer-panel');           // Footer Settings
-get_template_part('inc/customizer/homepage-template');           // Homepage Template Settings
+// get_template_part('inc/customizer/homepage-template');           // Homepage Template Settings
 
 get_template_part('inc/customizer/customizer-sanitize');    // Customizer Sanitize
