@@ -40,7 +40,7 @@
 				</div><!-- .site-branding -->
 			</div>
 			<div class="col-lg-6 col-md-6 col-4 menu-toggle-area">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu"></span></button>
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
 			</div>
 			<div class="col-lg-9 col-md-12 col-12 lprd-menu-area">
 

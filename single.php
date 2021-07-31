@@ -11,7 +11,7 @@ get_header();
 $content_cls = lprd_page_layout_cls();
 ?>
 
-<div id="primary" class="lprd-single-post site-main">
+<div id="primary" class="lprd-single-post lprd-blog-page site-main">
 	<div class="container">
 		<div class="row">
 			<div class="<?php esc_attr_e($content_cls)?>">
