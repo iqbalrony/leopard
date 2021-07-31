@@ -21,8 +21,6 @@ function leopard_general_settings_register($wp_customize) {
 	$wp_customize->get_section('static_front_page')->panel = 'lprd_general_settings_panel';
 	$wp_customize->get_section('static_front_page')->priority = '20';
 
-	// Register the radio image control class as a JS control type.
-	$wp_customize->register_control_type( 'Leopard_Customize_Control_Radio_Image' );
 	/**
 	 * Add General Settings Panel
 	 *
@@ -63,20 +61,18 @@ function leopard_general_settings_register($wp_customize) {
 			'sanitize_callback' => 'lprd_sanitize_switch_option',
 		)
 	);
-	$wp_customize->add_control( new Leopard_Customize_Switch_Control(
-			$wp_customize,
-			'lprd_preloader_on_off',
-			array(
-				'type'      => 'switch',
-				'label'     => esc_html__( 'Preloader Area', 'leopard' ),
-				'description'   => esc_html__( 'Show/Hide option for preloader.', 'leopard' ),
-				'section'   => 'lprd_preloader_section',
-				'choices'   => array(
-					'show'  => esc_html__( 'Show', 'leopard' ),
-					'hide'  => esc_html__( 'Hide', 'leopard' )
-				),
-				'priority'  => 10,
-			)
+	$wp_customize->add_control(
+		'lprd_preloader_on_off',
+		array(
+			'type' => 'select',
+			'label'    => esc_html__( 'Sidebars', 'leopard' ),
+			'description' => esc_html__( 'Choose sidebar from available layouts', 'leopard' ),
+			'section' => 'lprd_preloader_section',
+			'priority' => 10,
+			'choices'   => array(
+				'show'  => esc_html__( 'Show', 'leopard' ),
+				'hide'  => esc_html__( 'Hide', 'leopard' )
+			),
 		)
 	);
 

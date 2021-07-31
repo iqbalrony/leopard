@@ -121,6 +121,12 @@
     color: var(--color-trout);
     background-color: var(--color-white-lilac);
   }
+  
+  .menu-toggle:hover,
+  .menu-toggle:focus {
+    border: 1px solid var(--color-malibu);
+    background-color: var(--color-malibu);
+  }
 
   .lprd-menu-area {
     position: relative;

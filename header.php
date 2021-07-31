@@ -68,11 +68,9 @@
 			<div class="row">
 				<div class="col-12">
 					<div class="lprd-breadcrumbs">
-						<!-- <h2 class="main-title"><?php //echo lprd_breadcrumb_title(); ?></h2> -->
 						<?php if (is_singular('post')): ?>
 							<h1 class="lprd-breadcrumbs-title"><?php echo lprd_breadcrumb_title(); ?></h1>
 							<div class="lprd-breadcrumbs-meta">
-
 								<?php
 									if (!(is_home() && is_front_page())) {
 										printf('<a class="active" href="%s"><i class="fas fa-home"></i>' . esc_html__('Home', 'leopard') . '</a>', esc_url(home_url()));
@@ -80,10 +78,6 @@
 									echo lprd_posted_by();
 									echo lprd_posted_on();
 								?>
-
-								<?php //dgm_blog_author('style-1'); ?>
-								<?php //dgm_post_on('style-2'); ?>
-								<?php //dgm_single_cat('style-2'); ?>
 							</div>
 						<?php else: ?>
 							<h2 class="lprd-breadcrumbs-title"><?php echo lprd_breadcrumb_title(); ?></h2>

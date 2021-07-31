@@ -88,65 +88,6 @@ if (!function_exists('lprd_excerpt')) {
 }
 
 /**
- * Breadcrumb area show
- */
-if (!function_exists('lprd_breadcrumb_show')) {
-	function lprd_breadcrumb_show() {
-		if ('hide' == get_theme_mod('lprd_breadcrumb_on_off', 'show')) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-}
-
-
-/**
- * Breadcrumb
- */
-if (!function_exists('lprd_breadcrumb')) {
-	function lprd_breadcrumb() {
-		echo '<ul class="lprd-breadcrumb-link"><li>';
-
-		if (!(is_home() && is_front_page())) {
-			printf('<a class="active" href="%s"><i class="fas fa-home"></i>' . esc_html__('Home', 'leopard') . '</a><span class="breadcrumb-sperarator"><i class="fas fa-chevron-right"></i></span>', esc_url(home_url()));
-		}
-		$name = get_bloginfo('name');
-		$desc = get_bloginfo('description');
-		//is_home means blog page.
-		if (is_home() && is_front_page()) { //home page and fornt page not set
-			echo esc_html($desc);
-		} elseif (!is_home() && is_front_page()) { //setting fornt page.
-			echo get_the_title();
-		} elseif (is_home() && !is_front_page()) { //setting blog page
-			$id = (get_option('page_for_posts') != '0') ? get_option('page_for_posts') : '';
-			echo get_the_title($id);
-		} elseif (is_search()) {
-			echo esc_html__('Search Results for: ', 'leopard') . esc_html(get_search_query());
-		} elseif (is_404()) {
-			esc_html_e('404', 'leopard');
-		} elseif (is_category()) {
-			echo single_term_title();
-		} elseif (is_singular()) {
-			$pt_name = get_post_type(get_the_ID());
-			$obj = get_post_type_object($pt_name);
-			$name = str_replace(array('_', '-'), array(' ', ' '), $pt_name);
-			if (is_single()) {
-				echo get_the_title();
-			} elseif (is_page()) {
-				echo get_the_title();
-			} else {
-				echo esc_html($name);
-			}
-		} elseif (is_archive()) {
-			echo lprd_get_the_archive_title();
-		}
-		echo '</li></ul>';
-	}
-}
-
-
-/**
  * Function for Page Layout Option
  */
 if (!function_exists('lprd_page_layout')) {
@@ -177,6 +118,7 @@ if (!function_exists('lprd_page_layout_cls')) {
 	}
 }
 
+
 if ( ! function_exists( 'lprd_posted_on' ) ){
 	/**
 	 * return HTML with meta information for the current post-date/time.
@@ -205,6 +147,7 @@ if ( ! function_exists( 'lprd_posted_on' ) ){
 
 	}
 }
+
 
 if ( ! function_exists( 'lprd_posted_by' ) ) {
 	/**
@@ -383,51 +326,6 @@ if (!function_exists('lprd_allowed_html')) {
 }
 
 
-
-
-
-
-
-/*=============================================================
-				Unused Function
-===============================================================*/
-
-/**
- * Function for ekoo
- */
-if (!function_exists('lprd_ekoo')) {
-	function lprd_ekoo($item) {
-		return $item;
-	}
-}
-
-/**
- * Function for convert Hex To Rgb Color
- */
-if (!function_exists('lprd_HexToRgb')) {
-	function lprd_HexToRgb($hex, $alpha = '', $type = 'string') {
-		if (!empty($hex) && strpos($hex, '#') != 0) {
-			return;
-		}
-		$hex = str_replace('#', '', $hex);
-		$length = strlen($hex);
-		$rgb['r'] = hexdec($length == 6 ? substr($hex, 0, 2) : ($length == 3 ? str_repeat(substr($hex, 0, 1), 2) : 0));
-		$rgb['g'] = hexdec($length == 6 ? substr($hex, 2, 2) : ($length == 3 ? str_repeat(substr($hex, 1, 1), 2) : 0));
-		$rgb['b'] = hexdec($length == 6 ? substr($hex, 4, 2) : ($length == 3 ? str_repeat(substr($hex, 2, 1), 2) : 0));
-		if (!empty($alpha)) {
-			$rgb['a'] = $alpha;
-		}
-		if ($type == 'string') {
-			if (!empty($alpha)) {
-				$rgb = 'rgba(' . implode(', ', $rgb) . ')';
-			} else {
-				$rgb = 'rgb(' . implode(', ', $rgb) . ')';
-			}
-		}
-		return $rgb;
-	}
-}
-
 /**
  * Register Google fonts.
  */
@@ -458,120 +356,18 @@ if (!function_exists('lprd_fonts_url')) {
 }
 
 /**
- * Function for Meta option
+ * get_wysiwyg_output
  */
-if (!function_exists('lprd_page_meta')) {
-	function lprd_page_meta($uniq_id) {
-		if (defined('CMB2_LOADED') && !is_home() && !is_archive() && !is_search() && !is_404()) {
-			return get_post_meta(get_the_ID(), $uniq_id, true);
-		} else {
-			return '';
-		}
-	}
-}
+if (!function_exists('lprd_get_wysiwyg_output')) {
+	function lprd_get_wysiwyg_output($meta_key) {
+		global $wp_embed;
 
-/**
- * Function for default blog paginations
- */
-if (!function_exists('lprd_blog_paginations')) {
+		$content = $wp_embed->autoembed($meta_key);
+		$content = $wp_embed->run_shortcode($content);
+		$content = do_shortcode($content);
+		$content = wpautop($content);
 
-	function lprd_blog_paginations() {
-		$args = array(
-			'prev_text' => '<i class="ti-angle-left"></i>',
-			'next_text' => '<i class="ti-angle-right"></i>',
-			'type' => 'list'
-		);
-		echo paginate_links($args);
-	}
-}
-
-/**
- * Function for default blog paginations2
- */
-if (!function_exists('lprd_blog_paginations2')) {
-
-	function lprd_blog_paginations2($the_query = '') {
-		if (empty($the_query)) {
-			global $wp_query;
-			$the_query = $wp_query;
-		}
-		$big = 999999999; // need an unlikely integer
-		$html = paginate_links(array(
-			'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
-			'format' => '/page/%#%',
-			'current' => max(1, get_query_var('paged')),
-			'total' => $the_query->max_num_pages,
-			'end_size' => 2,
-			'prev_text' => '<i class="mdi mdi-chevron-left"></i>',
-			'next_text' => '<i class="mdi mdi-chevron-right"></i>',
-		));
-		$pretext = '<i class="mdi mdi-chevron-left"></i>';
-		$posttext = '<i class="mdi mdi-chevron-right"></i>';
-		$pre_deco = '<a href="" class="prev page-numbers custom">' . $pretext . '</a>';
-		$post_deco = '<a href="" class="next page-numbers custom">' . $posttext . '</a>';
-		$paged = get_query_var('paged') ? absint(get_query_var('paged')) : 1;
-		if (1 === $paged) {
-			$html = $pre_deco . $html;
-		}
-		if ($the_query->max_num_pages == $paged) {
-			$html = $html . $post_deco;
-		}
-		if (1 != $the_query->max_num_pages && 0 != $the_query->max_num_pages) {
-			echo '<div class="custom-pagination">' . lprd_allowed_html($html) . '</div>';
-		} else {
-			return;
-		}
-	}
-}
-
-/**
- * Function for comments paginations
- */
-if (!function_exists('lprd_comments_paginations')) {
-
-	function lprd_comments_paginations() {
-		$args = array(
-			'prev_text' => '<i class="mdi mdi-chevron-left"></i>',
-			'next_text' => '<i class="mdi mdi-chevron-right"></i>',
-			'type' => 'list'
-		);
-		paginate_comments_links($args);
-	}
-}
-
-
-/**
- * Function for blog author
- */
-if (!function_exists('lprd_blog_author')) {
-	function lprd_blog_author($style = '') {
-		$span_tag = '';
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Posted By: ', 'leopard') . '</span>';
-		}
-		$author_id = get_post_field('post_author', get_the_ID());
-		$author_name = get_the_author_meta('display_name', $author_id);
-		$url = get_author_posts_url($author_id);
-		$author = '<div class="author">' . $span_tag . '<a href="' . esc_url($url) . '">' . esc_html($author_name) . '</a></div>';
-		print_r($author);
-	}
-}
-
-/**
- * Function for post date
- */
-if (!function_exists('lprd_post_on')) {
-	function lprd_post_on($style = '') {
-		$span_tag = '';
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Posted : ', 'leopard') . '</span>';
-		}
-		$year = get_the_date('Y');
-		$month = get_the_time('m');
-		$day = get_the_time('d');
-		$url = get_day_link($year, $month, $day);
-		$date = '<div class="date">' . $span_tag . '<a href="' . esc_url($url) . '">' . esc_html(get_the_date('M d, Y')) . '</a></div>';
-		print_r($date);
+		return $content;
 	}
 }
 
@@ -648,79 +444,80 @@ if (!function_exists('lprd_breadcrumb_title')) {
 
 
 /**
- * get_wysiwyg_output
+ * Breadcrumb area show
  */
-if (!function_exists('lprd_get_wysiwyg_output')) {
-	function lprd_get_wysiwyg_output($meta_key) {
-		global $wp_embed;
-
-		$content = $wp_embed->autoembed($meta_key);
-		$content = $wp_embed->run_shortcode($content);
-		$content = do_shortcode($content);
-		$content = wpautop($content);
-
-		return $content;
+if (!function_exists('lprd_breadcrumb_show')) {
+	function lprd_breadcrumb_show() {
+		if ('hide' == get_theme_mod('lprd_breadcrumb_on_off', 'show')) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
 
 
 /**
- * One Click Demo Import Functions
+ * Breadcrumb
  */
-if (class_exists('OCDI_Plugin')) {
-	if (!function_exists('lprd_demo_import_func')) {
-		function lprd_demo_import_func() {
-			return array(
-				array(
-					'import_file_name' => __('Leopard Demo Data', 'leopard'),
-					'local_import_file' => trailingslashit(get_template_directory()) . 'inc/demo-data/content.xml',
-					'local_import_widget_file' => trailingslashit(get_template_directory()) . 'inc/demo-data/widgets.wie',
-					'local_import_customizer_file' => trailingslashit(get_template_directory()) . 'inc/demo-data/customizer.dat',
+if (!function_exists('lprd_breadcrumb')) {
+	function lprd_breadcrumb() {
+		echo '<ul class="lprd-breadcrumb-link"><li>';
 
-					'import_notice' => __('<p><sub style="color: red;font-size: 2em;vertical-align: middle;top: 2px;position: relative;margin-right: 5px;">*</sub>Import process might take several minutes depending on your server configuration. Please wait till it shows confirmation message.</p><p></p>', 'leopard'),
-				),
-			);
+		if (!(is_home() && is_front_page())) {
+			printf('<a class="active" href="%s"><i class="fas fa-home"></i>' . esc_html__('Home', 'leopard') . '</a><span class="breadcrumb-sperarator"><i class="fas fa-chevron-right"></i></span>', esc_url(home_url()));
 		}
-
-		add_filter('pt-ocdi/import_files', 'lprd_demo_import_func');
-	}
-
-	if (!function_exists('lprd_demo_page_setting')) {
-		function lprd_demo_page_setting() {
-			// Assign menus to their locations.
-			$main_menu = get_term_by('name', 'Main Menu', 'nav_menu');
-			$footer_menu = get_term_by('name', 'Footer Menu', 'nav_menu');
-
-			set_theme_mod('nav_menu_locations', array(
-					'pawshop-header-menu' => $main_menu->term_id,
-					'pawshop-footer-menu' => $footer_menu->term_id,
-				)
-			);
-
-			// Assign front page and posts page (blog page).
-			$front_page_id = get_page_by_title('Home');
-			$blog_page_id = get_page_by_title('Blog');
-
-			update_option('show_on_front', 'page');
-			update_option('elementor_disable_color_schemes', 'yes');
-			update_option('elementor_disable_typography_schemes', 'yes');
-			update_option('elementor_container_width', '1170');
-			update_option('elementor_space_between_widgets', '0');
-			update_option('elementor_load_fa4_shim', 'yes');
-			if (isset($front_page_id->ID)) {
-				update_option('page_on_front', $front_page_id->ID);
+		$name = get_bloginfo('name');
+		$desc = get_bloginfo('description');
+		//is_home means blog page.
+		if (is_home() && is_front_page()) { //home page and fornt page not set
+			echo esc_html($desc);
+		} elseif (!is_home() && is_front_page()) { //setting fornt page.
+			echo get_the_title();
+		} elseif (is_home() && !is_front_page()) { //setting blog page
+			$id = (get_option('page_for_posts') != '0') ? get_option('page_for_posts') : '';
+			echo get_the_title($id);
+		} elseif (is_search()) {
+			echo esc_html__('Search Results for: ', 'leopard') . esc_html(get_search_query());
+		} elseif (is_404()) {
+			esc_html_e('404', 'leopard');
+		} elseif (is_category()) {
+			echo single_term_title();
+		} elseif (is_singular()) {
+			$pt_name = get_post_type(get_the_ID());
+			$obj = get_post_type_object($pt_name);
+			$name = str_replace(array('_', '-'), array(' ', ' '), $pt_name);
+			if (is_single()) {
+				echo get_the_title();
+			} elseif (is_page()) {
+				echo get_the_title();
+			} else {
+				echo esc_html($name);
 			}
-			if (isset($blog_page_id->ID)) {
-				update_option('page_for_posts', $blog_page_id->ID);
-			}
-
+		} elseif (is_archive()) {
+			echo lprd_get_the_archive_title();
 		}
-
-		add_action('pt-ocdi/after_import', 'lprd_demo_page_setting');
+		echo '</li></ul>';
 	}
+}
 
-	/*
-	* Disable Success Message
-	*/
-	add_filter('pt-ocdi/disable_pt_branding', '__return_true');
+
+/**
+ * Preloader
+ */
+if (!function_exists('lprd_preloader')) {
+	function lprd_preloader() {
+		$preloader = get_theme_mod('lprd_preloader_on_off');
+		if ($preloader != 'hide'):
+			?>
+			<div class="lprd-preloader">
+				<div class="dash uno"></div>
+				<div class="dash dos"></div>
+				<div class="dash tres"></div>
+				<div class="dash cuatro"></div>
+			</div>
+
+		<?php endif;
+	}
+	add_action('wp_body_open', 'lprd_preloader');
 }
