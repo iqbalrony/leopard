@@ -9,9 +9,18 @@
 if (!function_exists('lprd_add_body_class')) {
 	add_filter('body_class', 'lprd_add_body_class');
 	function lprd_add_body_class( $classes ) {
+		$layout = lprd_page_layout();
 
 		if ( is_active_sidebar('sidebar-1') ) {
 			$classes[] = 'lprd-sidebar-enable';
+		}
+
+		if ( 'left' == $layout ) {
+			$classes[] = 'lprd-left-sidebar';
+		} elseif ( 'right' == $layout ) {
+			$classes[] = 'lprd-right-sidebar';
+		} else {
+			$classes[] = 'lprd-without-sidebar';
 		}
 
 		return $classes;
@@ -30,51 +39,7 @@ function lprd_404_page_content() {
 	$text_4 = esc_url(home_url('/'));
 	$text_5 = esc_html__('Back to Home', 'leopard');
 	echo sprintf('<div class="lprd-404-content"><h1>%1$s</h1><h2>%2$s</h2><p>%3$s</p><a class="lprd-default-btn lprd-404-btn" href="%4$s">%5$s<i class="fas fa-arrow-right"></i></a></div>', $text_1, $text_2, $text_3, $text_4, $text_5);
-}
 
-function lprd_breadcrumb_trail ( $args = [] ) {
-
-	$home_icon = '';
-
-
-	$attributes = 'class="lprd-breadcrumbs-separator-text"';
-	$separator = sprintf( '<%1$s %2$s>%3$s</%1$s>', lprd_escape_tags( 'span' ), $attributes, esc_html( '>' ) );
-
-	if (is_home() && is_front_page()) {
-		$home_title = esc_html( get_bloginfo( 'description', 'display' ) );
-	} else {
-		$home_icon = '<i class="fas fa-home"></i>';
-		$home_title = esc_html__('Home', 'leopard');
-	}
-
-	$labels = array(
-		'home' => $home_title,
-		// 'page_title' => esc_html__('Page', 'leopard'),
-		// 'page_title' => '',
-		'search' => esc_html__('Search', 'leopard') . ' %s',
-		'error_404' => esc_html__('404', 'leopard'),
-		// 'archives' => '',
-	);
-
-	$args = array(
-		'list_class'      => 'lprd-breadcrumbs',
-		'item_class'      => 'lprd-breadcrumbs-item',
-		'separator'      => $separator,
-		'separator_class' => 'lprd-breadcrumbs-separator',
-		'home_icon' => $home_icon,
-		'home_icon_class' => 'lprd-breadcrumbs-home-icon',
-		'labels' => $labels,
-		'show_on_front' => true,
-		'show_title' => true,
-	);
-
-	if ( ! empty( $args ) ) {
-		$breadcrumb = new Leopard_Breadcrumb( $args );
-	} else {
-		$breadcrumb = new Leopard_Breadcrumb();
-	}
-
-	return $breadcrumb->trail();
 }
 
 /**
@@ -98,13 +63,284 @@ if ( ! function_exists( 'lprd_escape_tags' ) ) {
 	}
 }
 
+/**
+ * Function for custom excerpt
+ */
+if (!function_exists('lprd_excerpt')) {
+	function lprd_excerpt($sl_length = '', $sl_sign = '') {
+
+		if (empty($sl_length)) {
+			$length = apply_filters('lprd_excerpt_length', 23);
+		} else {
+			$length = $sl_length;
+		}
+
+		if (empty($sl_sign)) {
+			$more = apply_filters('lprd_excerpt_more', '');
+		} else {
+			$more = $sl_sign;
+		}
+
+		printf('<p>%1$s</p>',
+			wp_trim_words(get_the_content(), $length, $more)
+		);
+	}
+}
 
 /**
- * Function for ekoo
+ * Breadcrumb area show
  */
-if (!function_exists('lprd_ekoo')) {
-	function lprd_ekoo($item) {
-		return $item;
+if (!function_exists('lprd_breadcrumb_show')) {
+	function lprd_breadcrumb_show() {
+		if ('hide' == get_theme_mod('lprd_breadcrumb_on_off', 'show')) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+}
+
+
+/**
+ * Breadcrumb
+ */
+if (!function_exists('lprd_breadcrumb')) {
+	function lprd_breadcrumb() {
+		echo '<ul class="lprd-breadcrumb-link"><li>';
+
+		if (!(is_home() && is_front_page())) {
+			printf('<a class="active" href="%s"><i class="fas fa-home"></i>' . esc_html__('Home', 'leopard') . '</a><span class="breadcrumb-sperarator"><i class="fas fa-chevron-right"></i></span>', esc_url(home_url()));
+		}
+		$name = get_bloginfo('name');
+		$desc = get_bloginfo('description');
+		//is_home means blog page.
+		if (is_home() && is_front_page()) { //home page and fornt page not set
+			echo esc_html($desc);
+		} elseif (!is_home() && is_front_page()) { //setting fornt page.
+			echo get_the_title();
+		} elseif (is_home() && !is_front_page()) { //setting blog page
+			$id = (get_option('page_for_posts') != '0') ? get_option('page_for_posts') : '';
+			echo get_the_title($id);
+		} elseif (is_search()) {
+			echo esc_html__('Search Results for: ', 'leopard') . esc_html(get_search_query());
+		} elseif (is_404()) {
+			esc_html_e('404', 'leopard');
+		} elseif (is_category()) {
+			echo single_term_title();
+		} elseif (is_singular()) {
+			$pt_name = get_post_type(get_the_ID());
+			$obj = get_post_type_object($pt_name);
+			$name = str_replace(array('_', '-'), array(' ', ' '), $pt_name);
+			if (is_single()) {
+				echo get_the_title();
+			} elseif (is_page()) {
+				echo get_the_title();
+			} else {
+				echo esc_html($name);
+			}
+		} elseif (is_archive()) {
+			echo lprd_get_the_archive_title();
+		}
+		echo '</li></ul>';
+	}
+}
+
+
+/**
+ * Function for Page Layout Option
+ */
+if (!function_exists('lprd_page_layout')) {
+	function lprd_page_layout() {
+		$layout = get_theme_mod('lprd_page_layout', 'right');
+		if (!is_active_sidebar('sidebar-1')) {
+			$layout = 'without';
+		}
+		return $layout;
+	}
+}
+
+
+/**
+ * Function for Page Layout Option
+ */
+if (!function_exists('lprd_page_layout_cls')) {
+	function lprd_page_layout_cls() {
+		$layout = lprd_page_layout();
+		if ( 'left' == $layout ) {
+			$content_cls = 'col-lg-8 offset-lg-0 order-lg-2 col-md-10 offset-md-1 col-sm-12 offset-sm-0';
+		} elseif ( 'without' == $layout ) {
+			$content_cls = 'col-md-12 col-sm-12 col-lg-12 col-xl-12';
+		} else {
+			$content_cls = 'col-lg-8 offset-lg-0 col-md-10 offset-md-1 col-sm-12 offset-sm-0';
+		}
+		return $content_cls;
+	}
+}
+
+if ( ! function_exists( 'lprd_posted_on' ) ){
+	/**
+	 * return HTML with meta information for the current post-date/time.
+	 */
+	function lprd_posted_on() {
+		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
+			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
+		}
+
+		$time_string = sprintf(
+			$time_string,
+			esc_attr( get_the_date( DATE_W3C ) ),
+			esc_html( get_the_date() ),
+			esc_attr( get_the_modified_date( DATE_W3C ) ),
+			esc_html( get_the_modified_date() )
+		);
+
+		$icon = '<i class="fas fa-clock"></i>';
+
+		$posted_on = sprintf(
+			'<a class="lprd--post-date-text" href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $icon . $time_string . '</a>'
+		);
+
+		return $posted_on;
+
+	}
+}
+
+if ( ! function_exists( 'lprd_posted_by' ) ) {
+	/**
+	 * return HTML with meta information for the current author.
+	 */
+	function lprd_posted_by() {
+
+		$icon = '<i class="fas fa-user-alt"></i>';
+		$author_id = get_post_field('post_author', get_the_ID());
+		$author_name = get_the_author_meta('display_name', $author_id);
+		$url = get_author_posts_url($author_id);
+		$byline = sprintf(
+			'<a class="lprd--post-author-text author vcard" href="' . esc_url( $url ) . '">' . $icon . esc_html( $author_name ) . '</a>'
+		);
+
+		return $byline;
+
+	}
+}
+
+/**
+ * Function for get comment number
+ */
+if (!function_exists('lprd_get_comment_number')) {
+
+	function lprd_get_comment_number($style = '', $link = true) {
+		$number = get_comments_number(get_the_ID());
+
+		if( 0 == $number ){
+			$comment_number = sprintf('<span class="lprd--post-comment-text comments-number"><i class="fas fa-comment"></i>%1$s</span>', esc_html__('No Comments', 'leopard') );
+		}elseif( 1 == $number ){
+
+			$comment_number = sprintf('<a class="lprd--post-comment-text comments-number" href="%1$s"><i class="fas fa-comment"></i>%2$s</a>', get_comments_link(), esc_html__('1 Comment', 'leopard'));
+		}else{
+			$comment_number = sprintf('<a class="lprd--post-comment-text comments-number" href="%1$s"><i class="fas fa-comment"></i>%2$s</a>', get_comments_link(), esc_html($number) );
+		}
+
+		return $comment_number;
+	}
+}
+
+
+/**
+ * Function for post's single category
+ */
+if (!function_exists('lprd_single_cat')) {
+	function lprd_single_cat() {
+		$cats = get_the_category(get_the_ID());
+		if (!empty($cats) && isset($cats[0]->name)) {
+			$single_cat = sprintf('<div class="lprd--post-cat"><a href="%1$s" class="lprd--post-cat-text cat-links">%2$s</a></div>', get_category_link($cats[0]->term_id), esc_html($cats[0]->name));
+			return $single_cat;
+		}
+	}
+}
+
+
+/**
+ * Function for post categories list
+ */
+if (!function_exists('lprd_cat_list')) {
+
+	function lprd_cat_list($style = '', $space = ', ') {
+		/* translators: used between list items, there is a space after the comma */
+		$categories_list = get_the_category_list($space);
+		$span_tag = '';
+		if ('style-1' == $style) {
+			$span_tag = '<span>' . esc_html__('Categories: ', 'leopard') . '</span>';
+		}
+		if ($categories_list) {
+			/* translators: 1: list of categories. */
+			printf('<div class="cat-links">%1$s %2$s</div>', $span_tag, $categories_list);
+		}
+	}
+}
+
+/**
+ * Function for post tags list
+ */
+if (!function_exists('lprd_tags_list')) {
+
+	function lprd_tags_list($style = '') {
+		if ('style-1' == $style) {
+			$span_tag = '<span>' . esc_html__('Tags: ', 'leopard') . '</span>';
+		} else {
+			$span_tag = '';
+		}
+		/* translators: used between list items, there is a space after the comma */
+		$tags_list = get_the_tag_list('', ' ');
+		if ($tags_list) {
+			/* translators: 1: list of tags. */
+			printf('<div class="tags-links">%1$s %2$s</div>', $span_tag, $tags_list); // WPCS: XSS OK.
+		}
+	}
+}
+
+/**
+ * Function for get thumbnail image
+ */
+if ( ! function_exists( 'lprd_post_thumbnail' ) ){
+	/**
+	 * Displays an optional post thumbnail.
+	 *
+	 * Wraps the post thumbnail in an anchor element on index views, or a div
+	 * element when on single views.
+	 */
+	function lprd_post_thumbnail() {
+		if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
+			return;
+		}
+
+		if ( is_singular() ) :
+			?>
+
+			<div class="post-thumbnail">
+				<?php the_post_thumbnail(); ?>
+			</div><!-- .post-thumbnail -->
+
+		<?php else : ?>
+
+			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true" tabindex="-1">
+				<?php
+					the_post_thumbnail(
+						'post-thumbnail',
+						array(
+							'alt' => the_title_attribute(
+								array(
+									'echo' => false,
+								)
+							),
+						)
+					);
+				?>
+			</a>
+
+			<?php
+		endif; // End is_singular().
 	}
 }
 
@@ -146,6 +382,25 @@ if (!function_exists('lprd_allowed_html')) {
 	}
 }
 
+
+
+
+
+
+
+/*=============================================================
+				Unused Function
+===============================================================*/
+
+/**
+ * Function for ekoo
+ */
+if (!function_exists('lprd_ekoo')) {
+	function lprd_ekoo($item) {
+		return $item;
+	}
+}
+
 /**
  * Function for convert Hex To Rgb Color
  */
@@ -174,30 +429,6 @@ if (!function_exists('lprd_HexToRgb')) {
 }
 
 /**
- * Function for custom excerpt
- */
-if (!function_exists('lprd_excerpt')) {
-	function lprd_excerpt($sl_length = '', $sl_sign = '') {
-
-		if (empty($sl_length)) {
-			$length = apply_filters('lprd_excerpt_length', 23);
-		} else {
-			$length = $sl_length;
-		}
-
-		if (empty($sl_sign)) {
-			$more = apply_filters('lprd_excerpt_more', '');
-		} else {
-			$more = $sl_sign;
-		}
-
-		printf('<p>%1$s</p>',
-			wp_trim_words(get_the_content(), $length, $more)
-		);
-	}
-}
-
-/**
  * Register Google fonts.
  */
 if (!function_exists('lprd_fonts_url')) {
@@ -207,8 +438,11 @@ if (!function_exists('lprd_fonts_url')) {
 		$subsets = 'latin,latin-ext';
 
 		/* translators: If there are characters in your language that are not supported by Merriweather, translate this to 'off'. Do not translate into your own language. */
-		if ('off' !== _x('on', 'Roboto: on or off', 'leopard')) {
-			$fonts[] = 'Roboto:200,400,500,600';
+		if ('off' !== _x('on', 'Poppins: on or off', 'leopard')) {
+			$fonts[] = 'Poppins:200,300,400,500,600';
+		}
+		if ('off' !== _x('on', 'Montserrat: on or off', 'leopard')) {
+			$fonts[] = 'Montserrat:400,500,600,700,800,900';
 		}
 
 		if ($fonts) {
@@ -233,25 +467,6 @@ if (!function_exists('lprd_page_meta')) {
 		} else {
 			return '';
 		}
-	}
-}
-
-/**
- * Function for Page Layout Option
- */
-if (!function_exists('lprd_page_layout')) {
-	function lprd_page_layout() {
-		$lprd_customizer = get_theme_mod('lprd_page_layout', 'right');
-		$page_layout_option = lprd_page_meta('_lprd_page_layout_option');
-		$lprd_page = !empty($page_layout_option) ? $page_layout_option : 'default';
-		$layout = $lprd_page;
-		if (empty($layout) || $layout == 'default') {
-			$layout = $lprd_customizer;
-		}
-		if (!is_active_sidebar('sidebar-1')) {
-			$layout = 'without';
-		}
-		return $layout;
 	}
 }
 
@@ -361,81 +576,6 @@ if (!function_exists('lprd_post_on')) {
 }
 
 /**
- * Function for post categories list
- */
-if (!function_exists('lprd_cat_list')) {
-
-	function lprd_cat_list($style = '', $space = ', ') {
-		/* translators: used between list items, there is a space after the comma */
-		$categories_list = get_the_category_list($space);
-		$span_tag = '';
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Categories: ', 'leopard') . '</span>';
-		}
-		if ($categories_list) {
-			/* translators: 1: list of categories. */
-			printf('<div class="cat-links">%1$s %2$s</div>', $span_tag, $categories_list);
-		}
-	}
-}
-
-/**
- * Function for post's single category
- */
-if (!function_exists('lprd_single_cat')) {
-	function lprd_single_cat($style = '') {
-		$span_tag = '';
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Category: ', 'leopard') . '</span>';
-		}
-		$cats = get_the_category(get_the_ID());
-		if (!empty($cats) && isset($cats[0]->name)) {
-			printf('<div class="single-cat">%1$s<a href="%2$s" class="cat-links">%3$s</a></div>', $span_tag, get_category_link($cats[0]->term_id), esc_html($cats[0]->name));
-		}
-	}
-}
-
-/**
- * Function for post tags list
- */
-if (!function_exists('lprd_tags_list')) {
-
-	function lprd_tags_list($style = '') {
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Tag: ', 'leopard') . '</span>';
-		} else {
-			$span_tag = '';
-		}
-		/* translators: used between list items, there is a space after the comma */
-		$tags_list = get_the_tag_list('', ' ');
-		if ($tags_list) {
-			/* translators: 1: list of tags. */
-			printf('<div class="tags-links">%1$s %2$s</div>', $span_tag, $tags_list); // WPCS: XSS OK.
-		}
-	}
-}
-
-/**
- * Function for get comment number
- */
-if (!function_exists('lprd_get_comment_number')) {
-
-	function lprd_get_comment_number($style = '', $link = true) {
-		$number = get_comments_number(get_the_ID());
-		if ('style-1' == $style) {
-			$span_tag = '<span>' . esc_html__('Comments', 'leopard') . '</span>';
-		} else {
-			$span_tag = '';
-		}
-		if ($link == true) {
-			printf('<div class="comments-number"><a href="%1$s">%2$s</a></div>', get_comments_link(), $number . ' ' . $span_tag);
-		} else {
-			printf('<div class="comments-number">%1$s%2$s</div>', $number, $span_tag);
-		}
-	}
-}
-
-/**
  * Custom Archive Title modifier
  */
 if (!function_exists('lprd_get_the_archive_title')) {
@@ -503,68 +643,6 @@ if (!function_exists('lprd_breadcrumb_title')) {
 		}
 
 		return $breadcrumb_title;
-	}
-}
-
-/**
- * Breadcrumb
- */
-if (!function_exists('lprd_breadcrumb')) {
-	function lprd_breadcrumb() {
-		echo '<ul class="lprd-breadcrumb-link"><li>';
-
-		if (!(is_home() && is_front_page())) {
-			printf("<a class='active' href='%s'>" . esc_html__('Home', 'leopard') . "</a><span class='breadcrumb-sperarator'><i class='mdi mdi-chevron-right'></i></span>", esc_url(home_url()));
-		}
-		$name = get_bloginfo('name');
-		$desc = get_bloginfo('description');
-		//is_home means blog page.
-		if (is_home() && is_front_page()) { //home page and fornt page not set
-			echo esc_html($desc);
-		} elseif (!is_home() && is_front_page()) { //setting fornt page.
-			echo get_the_title();
-		} elseif (is_home() && !is_front_page()) { //setting blog page
-			$id = (get_option('page_for_posts') != '0') ? get_option('page_for_posts') : '';
-			echo get_the_title($id);
-		} elseif (is_search()) {
-			esc_html_e('Search Page', 'leopard');
-		} elseif (is_404()) {
-			esc_html_e('404', 'leopard');
-		} elseif (is_category()) {
-			echo single_term_title();
-		} elseif (is_singular()) {
-			$pt_name = get_post_type(get_the_ID());
-			$obj = get_post_type_object($pt_name);
-			$name = str_replace(array('_', '-'), array(' ', ' '), $pt_name);
-			if (is_single()) {
-				echo get_the_title();
-			} elseif (is_page()) {
-				echo get_the_title();
-			} else {
-				echo esc_html($name);
-			}
-		} elseif (is_archive()) {
-			echo lprd_get_the_archive_title();
-		}
-		echo '</li></ul>';
-	}
-}
-
-/**
- * Breadcrumb area on/off
- */
-if (!function_exists('lprd_breadcrumb_on_off')) {
-	function lprd_breadcrumb_on_off() {
-		$lprd_customizer = get_theme_mod('lprd_breadcrumb_on_off', 'show');
-		$page_breadcrumb_option = lprd_page_meta('_lprd_breadcrumbs_on_off');
-		$lprd_page = !empty($page_breadcrumb_option) ? $page_breadcrumb_option : 'default';
-		$on_off = $lprd_page;
-		if ($on_off == 'show' || $on_off == 'hide') {
-			return $on_off;
-		} else {
-			$on_off = $lprd_customizer;
-		}
-		return $on_off;
 	}
 }
 

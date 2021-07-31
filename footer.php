@@ -26,6 +26,12 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="site-info text-center">
+						<?php
+						$copyright_txt = get_theme_mod('lprd_copyright_txt');
+						if($copyright_txt):
+							echo wpautop(lprd_allowed_html($copyright_txt));
+						?>
+						<?php else: ?>
 						<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'leopard' ) ); ?>">
 							<?php
 							/* translators: %s: CMS name, i.e. WordPress. */
@@ -37,6 +43,7 @@
 							/* translators: 1: Theme name, 2: Theme author. */
 							printf( esc_html__( 'Theme: %1$s by %2$s', 'leopard' ), 'leopard', '<a href="http://www.iqbalrony.com/">iqbalrony</a>' );
 							?>
+						<?php endif; ?>
 					</div><!-- .site-info -->
 				</div>
 			</div>

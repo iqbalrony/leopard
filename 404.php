@@ -10,7 +10,7 @@
 get_header();
 ?>
 
-<div id="primary" class="lprd-index-page lprd-blog-page site-main lprd-404-page">
+<div class="site-main lprd-404-page">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">

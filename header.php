@@ -31,18 +31,18 @@
 			<div class="col-lg-3 col-md-6 col-8">
 				<div class="site-branding">
 					<?php
-					if( get_custom_logo() ):
+					if( get_theme_mod( 'custom_logo' ) ):
 						the_custom_logo();
 					else :
 					?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+						<h2 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php bloginfo( 'name' ); ?>" itemprop="url"><?php bloginfo( 'name' ); ?></a></h2>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div>
 			<div class="col-lg-6 col-md-6 col-4 menu-toggle-area">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><span class="dashicons dashicons-menu"></span></button>
 			</div>
-			<div class="col-lg-9 col-md-12 col-12">
+			<div class="col-lg-9 col-md-12 col-12 lprd-menu-area">
 
 				<nav id="site-navigation" class="main-navigation hidden-mobile">
 
@@ -62,13 +62,35 @@
 	</div>
 </header><!-- #masthead -->
 
-<?php if( 'show' == get_theme_mod('lprd_breadcrumb_on_off', 'show') ):?>
+<?php if( lprd_breadcrumb_show() && ! is_404() ):?>
 	<div class="lprd-breadcrumbs-area">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
-					<?php echo lprd_breadcrumb_trail(); ?>
-					<?php lprd_breadcrumb(); ?>
+					<div class="lprd-breadcrumbs">
+						<!-- <h2 class="main-title"><?php //echo lprd_breadcrumb_title(); ?></h2> -->
+						<?php if (is_singular('post')): ?>
+							<h1 class="lprd-breadcrumbs-title"><?php echo lprd_breadcrumb_title(); ?></h1>
+							<div class="lprd-breadcrumbs-meta">
+
+								<?php
+									if (!(is_home() && is_front_page())) {
+										printf('<a class="active" href="%s"><i class="fas fa-home"></i>' . esc_html__('Home', 'leopard') . '</a>', esc_url(home_url()));
+									}
+									echo lprd_posted_by();
+									echo lprd_posted_on();
+								?>
+
+								<?php //dgm_blog_author('style-1'); ?>
+								<?php //dgm_post_on('style-2'); ?>
+								<?php //dgm_single_cat('style-2'); ?>
+							</div>
+						<?php else: ?>
+							<h2 class="lprd-breadcrumbs-title"><?php echo lprd_breadcrumb_title(); ?></h2>
+							<?php lprd_breadcrumb(); ?>
+						<?php endif ?>
+
+					</div>
 				</div>
 			</div>
 		</div>

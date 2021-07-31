@@ -13,16 +13,7 @@
  */
 
 get_header();
-$layout = '';
-// $layout = 'left';
-// $layout = 'without';
-if ( 'left' == $layout ) {
-	$content_cls = 'col-lg-8 offset-lg-0 order-lg-2 col-md-10 offset-md-1 col-sm-12 offset-sm-0';
-} elseif ( 'without' == $layout ) {
-	$content_cls = 'col-md-12 col-sm-12 col-lg-12 col-xl-12';
-} else {
-	$content_cls = 'col-lg-8 offset-lg-0 col-md-10 offset-md-1 col-sm-12 offset-sm-0';
-}
+$content_cls = lprd_page_layout_cls();
 ?>
 <div id="primary" class="lprd-index-page lprd-blog-page site-main">
 	<div class="container">
@@ -63,11 +54,7 @@ if ( 'left' == $layout ) {
 					?>
 				</div>
 			</div>
-				<?php
-					if( $layout != 'without' ){
-						get_sidebar();
-					}
-				?>
+				<?php if( 'without' != lprd_page_layout() ){ get_sidebar(); } ?>
 		</div>
 	</div>
 </div><!-- #main -->

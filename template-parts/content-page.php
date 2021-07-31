@@ -9,12 +9,25 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
-	</header><!-- .entry-header -->
+<article id="post-<?php the_ID(); ?>" <?php post_class('lprd-page-item'); ?>>
 
-	<?php leopard_post_thumbnail(); ?>
+	<?php if(  lprd_breadcrumb_show() ):?>
+		<header class="entry-header">
+			<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+			<div class="entry-meta">
+				<?php
+					echo lprd_posted_on();
+					echo lprd_posted_by();
+				?>
+			</div>
+		</header><!-- .entry-header -->
+	<?php endif; ?>
+
+	<?php if( has_post_thumbnail() ):?>
+		<div class="lprd-page-thumb-area">
+			<?php lprd_post_thumbnail(); ?>
+		</div>
+	<?php endif; ?>
 
 	<div class="entry-content">
 		<?php
@@ -51,4 +64,5 @@
 			?>
 		</footer><!-- .entry-footer -->
 	<?php endif; ?>
+
 </article><!-- #post-<?php the_ID(); ?> -->

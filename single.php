@@ -8,37 +8,39 @@
  */
 
 get_header();
+$content_cls = lprd_page_layout_cls();
 ?>
 
-<div id="primary" class="lprd-index-page lprd-blog-page site-main">
+<div id="primary" class="lprd-single-post site-main">
 	<div class="container">
 		<div class="row">
-			<div class="col-lg-8">
+			<div class="<?php esc_attr_e($content_cls)?>">
+				<div class="lprd-default-page-container">
+					<?php
+					while ( have_posts() ) :
+						the_post();
 
-				<?php
-				while ( have_posts() ) :
-					the_post();
+						get_template_part( 'template-parts/content','single');
 
-					get_template_part( 'template-parts/content', get_post_type() );
+						the_post_navigation(
+							array(
+								'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'leopard' ) . '</span> <span class="nav-title">%title</span>',
+								'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'leopard' ) . '</span> <span class="nav-title">%title</span>',
+							)
+						);
 
-					the_post_navigation(
-						array(
-							'prev_text' => '<span class="nav-subtitle">' . esc_html__( 'Previous:', 'leopard' ) . '</span> <span class="nav-title">%title</span>',
-							'next_text' => '<span class="nav-subtitle">' . esc_html__( 'Next:', 'leopard' ) . '</span> <span class="nav-title">%title</span>',
-						)
-					);
+						// If comments are open or we have at least one comment, load up the comment template.
+						if ( comments_open() || get_comments_number() ) :
+							comments_template();
+						endif;
 
-					// If comments are open or we have at least one comment, load up the comment template.
-					if ( comments_open() || get_comments_number() ) :
-						comments_template();
-					endif;
-
-				endwhile; // End of the loop.
-				?>
+					endwhile; // End of the loop.
+					?>
+				</div>
 			</div>
 
-				<?php get_sidebar(); ?>
-			
+				<?php if( 'without' != lprd_page_layout() ){ get_sidebar(); } ?>
+
 		</div>
 	</div>
 </div><!-- #main -->
