@@ -209,6 +209,7 @@
   .menu .page_item a,
   .menu .menu-item a {
     padding: 12px 20px;
+	position: relative;
   }
 }
 
