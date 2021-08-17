@@ -14,7 +14,7 @@ $content_cls = lprd_page_layout_cls();
 <div id="primary" class="lprd-archive-page lprd-blog-page site-main">
 	<div class="container">
 		<div class="row">
-			<div class="<?php esc_attr_e($content_cls)?>">
+			<div class="<?php echo esc_attr($content_cls)?>">
 				<div class="lprd-default-page-container">
 
 					<?php if ( have_posts() ) : ?>
