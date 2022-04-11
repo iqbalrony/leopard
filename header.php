@@ -36,6 +36,12 @@
 					else :
 					?>
 						<h2 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php bloginfo( 'name' ); ?>" itemprop="url"><?php bloginfo( 'name' ); ?></a></h2>
+						<?php
+						$description = get_bloginfo( 'description' );
+						if ( $description ) {
+							echo sprintf( '<div class="site-description">%s</div>', esc_html( $description ) );
+						}
+						?>
 					<?php endif; ?>
 				</div><!-- .site-branding -->
 			</div>
@@ -55,7 +61,7 @@
 						)
 					);
 					?>
-					<button class="screen-reader-text lprd-menu-close"><i class="fas fa-times"></i></button>
+					<span class="screen-reader-text lprd-menu-close"><i class="fas fa-times"></i></span>
 				</nav><!-- #site-navigation -->
 			</div>
 		</div>

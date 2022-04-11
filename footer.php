@@ -31,18 +31,10 @@
 						if($copyright_txt):
 							echo wpautop(lprd_allowed_html($copyright_txt));
 						?>
-						<?php else: ?>
-						<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'leopard' ) ); ?>">
-							<?php
-							/* translators: %s: CMS name, i.e. WordPress. */
-							printf( esc_html__( 'Proudly powered by %s', 'leopard' ), 'WordPress' );
-							?>
-						</a>
-						<span class="sep"> | </span>
-							<?php
-							/* translators: 1: Theme name, 2: Theme author. */
-							printf( esc_html__( 'Theme: %1$s by %2$s', 'leopard' ), 'leopard', '<a href="http://www.iqbalrony.com/">iqbalrony</a>' );
-							?>
+						<?php
+						else:
+							print( esc_html__( 'Leopard', 'leopard' ) );
+						?>
 						<?php endif; ?>
 					</div><!-- .site-info -->
 				</div>

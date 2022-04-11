@@ -10,14 +10,14 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class('lprd--post-item'); ?>>
-	<div class="lprd--post-thumb-area">
-		<a class="lprd--post-thumb" href="<?php the_permalink(); ?>">
-			<?php if (has_post_thumbnail()): ?>
-				<?php
-				the_post_thumbnail('full');
-				endif; ?>
-		</a>
-	</div>
+
+	<?php if (has_post_thumbnail()): ?>
+		<div class="lprd--post-thumb-area">
+			<a class="lprd--post-thumb" href="<?php the_permalink(); ?>">
+				<?php the_post_thumbnail('full');?>
+			</a>
+		</div>
+	<?php endif;?>
 
 	<div class="lprd--post-content-area">
 

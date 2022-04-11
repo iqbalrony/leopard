@@ -39,4 +39,17 @@
 			}
 		} );
 	} );
+
+	// Color Scheme
+	//console.log(wp);
+	//console.log(wp.customize());
+	wp.customize( 'lprd_color_white', function( value ) {
+		console.log(value);
+		value.bind( function( to ) {
+			console.log(to);
+			$('body' ).css( {
+				'background': to,
+			} );
+		} );
+	} );
 }( jQuery ) );

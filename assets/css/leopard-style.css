@@ -570,8 +570,12 @@ a:active {
   color: var(--color-malibu);
 }
 
-a:focus {
+/* a:focus {
   outline: thin dotted;
+} */
+
+a:focus img{
+  outline-style: auto;
 }
 
 a:hover,
