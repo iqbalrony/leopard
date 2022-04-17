@@ -35,7 +35,6 @@ class LPRD_Enqueue_Scripts {
 		// Add responsive stylesheet
 		wp_enqueue_style('leopard-responsive', get_template_directory_uri() . '/assets/css/responsive.css', array(), null);
 
-		
 		/**
 		 * Load All jQuery Library
 		 */

@@ -135,7 +135,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_white',
 		array(
 			'default' => '#ffffff',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -154,7 +154,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_white_lilac',
 		array(
 			'default' => '#F3F5FB',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -173,7 +173,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_porcelain',
 		array(
 			'default' => '#F3F4F5',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -192,7 +192,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_french_gray',
 		array(
 			'default' => '#C7C7CF',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -211,7 +211,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_trout',
 		array(
 			'default' => '#494F5E',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -230,7 +230,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_firefly',
 		array(
 			'default' => '#0C1428',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -249,7 +249,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_manatee',
 		array(
 			'default' => '#8F90A0',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -268,7 +268,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_malibu',
 		array(
 			'default' => '#8BA4F9',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -287,7 +287,7 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_color_outrageous_orange',
 		array(
 			'default' => '#FE5B36',
-			'transport' => 'refresh',
+			'transport' => 'postMessage',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
