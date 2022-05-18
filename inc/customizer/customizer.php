@@ -10,7 +10,7 @@
  *
  * @param WP_Customize_Manager $wp_customize Theme Customizer object.
  */
-function leopard_customize_register($wp_customize) {
+function lprd_customize_register($wp_customize) {
 	$wp_customize->get_setting('blogname')->transport = 'postMessage';
 	$wp_customize->get_setting('blogdescription')->transport = 'postMessage';
 	$wp_customize->get_setting('header_textcolor')->transport = 'postMessage';
@@ -28,17 +28,17 @@ function leopard_customize_register($wp_customize) {
 
 }
 
-add_action('customize_register', 'leopard_customize_register');
+add_action('customize_register', 'lprd_customize_register');
 
 
 /**
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
-function leopard_customize_preview_js() {
+function lprd_customize_preview_js() {
 	wp_enqueue_script('leopard-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array('customize-preview'), _S_VERSION, true);
 }
 
-add_action('customize_preview_init', 'leopard_customize_preview_js');
+add_action('customize_preview_init', 'lprd_customize_preview_js');
 
 
 /**

@@ -6,9 +6,9 @@
  * @since 1.0.0
  */
 
-add_action('customize_register', 'leopard_general_settings_register');
+add_action('customize_register', 'lprd_general_settings_register');
 
-function leopard_general_settings_register($wp_customize) {
+function lprd_general_settings_register($wp_customize) {
 
 	$wp_customize->get_section('title_tagline')->panel = 'lprd_general_settings_panel';
 	$wp_customize->get_setting('blogname')->transport = 'postMessage';
@@ -65,8 +65,8 @@ function leopard_general_settings_register($wp_customize) {
 		'lprd_preloader_on_off',
 		array(
 			'type' => 'select',
-			'label'    => esc_html__( 'Sidebars', 'leopard' ),
-			'description' => esc_html__( 'Choose sidebar from available layouts', 'leopard' ),
+			'label'    => esc_html__( 'Preloader', 'leopard' ),
+			// 'description' => esc_html__('Show/Hide option for preloader.', 'leopard'),
 			'section' => 'lprd_preloader_section',
 			'priority' => 10,
 			'choices'   => array(

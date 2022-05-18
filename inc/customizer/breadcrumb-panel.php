@@ -6,9 +6,9 @@
  * @since 1.0.0
  */
 
-add_action('customize_register', 'leopard_breadcrumb_settings_register');
+add_action('customize_register', 'lprd_breadcrumb_settings_register');
 
-function leopard_breadcrumb_settings_register($wp_customize) {
+function lprd_breadcrumb_settings_register($wp_customize) {
 
 
 	/**

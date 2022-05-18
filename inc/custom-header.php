@@ -16,7 +16,7 @@
  *
  * @uses leopard_header_style()
  */
-function leopard_custom_header_setup() {
+function lprd_custom_header_setup() {
 	add_theme_support(
 		'custom-header',
 		apply_filters(
@@ -27,20 +27,20 @@ function leopard_custom_header_setup() {
 				'width'              => 1000,
 				'height'             => 250,
 				'flex-height'        => true,
-				'wp-head-callback'   => 'leopard_header_style',
+				'wp-head-callback'   => 'lprd_header_style',
 			)
 		)
 	);
 }
-add_action( 'after_setup_theme', 'leopard_custom_header_setup' );
+add_action( 'after_setup_theme', 'lprd_custom_header_setup' );
 
-if ( ! function_exists( 'leopard_header_style' ) ) :
+if ( ! function_exists( 'lprd_header_style' ) ) :
 	/**
 	 * Styles the header image and text displayed on the blog.
 	 *
 	 * @see leopard_custom_header_setup().
 	 */
-	function leopard_header_style() {
+	function lprd_header_style() {
 		$header_text_color = get_header_textcolor();
 
 		/*

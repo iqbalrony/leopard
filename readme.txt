@@ -23,6 +23,9 @@ Leopard is a smart & dynamic blog theme. Fully responsive design displays beauti
 == Credits ==
 * Based on Underscores https://underscores.me/, (C) 2012-2020 Automattic, Inc., [GPLv2 or later](https://www.gnu.org/licenses/gpl-2.0.html)
 
+== Copyright ==
+Leopard WordPress theme, Copyright 2022 leopard
+Leopard is distributed under the terms of the GNU GPLv2 or later
 
 == Resources ==
 = Libraries =

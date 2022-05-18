@@ -1,6 +1,6 @@
 <?php
 
-if ( ! function_exists( 'leopard_setup' ) ) {
+if ( ! function_exists( 'lprd_setup' ) ) {
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -8,7 +8,7 @@ if ( ! function_exists( 'leopard_setup' ) ) {
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function leopard_setup() {
+	function lprd_setup() {
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
@@ -89,7 +89,7 @@ if ( ! function_exists( 'leopard_setup' ) ) {
 			)
 		);
 	}
-	add_action( 'after_setup_theme', 'leopard_setup' );
+	add_action( 'after_setup_theme', 'lprd_setup' );
 }
 
 /**
@@ -99,17 +99,18 @@ if ( ! function_exists( 'leopard_setup' ) ) {
  *
  * @global int $content_width
  */
-function leopard_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'leopard_content_width', 640 );
+add_action( 'after_setup_theme', 'lprd_content_width', 0 );
+function lprd_content_width() {
+	$GLOBALS['content_width'] = apply_filters( 'lprd_content_width', 640 );
 }
-add_action( 'after_setup_theme', 'leopard_content_width', 0 );
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function leopard_widgets_init() {
+add_action( 'widgets_init', 'lprd_widgets_init' );
+function lprd_widgets_init() {
 	register_sidebar(array(
 		'name' => esc_html__('Sidebar', 'leopard'),
 		'id' => 'sidebar-1',
@@ -128,33 +129,4 @@ function leopard_widgets_init() {
 		'before_title' => '<div class="lprd-widget-title"><h2 class="widget-title">',
 		'after_title' => '</h2></div>',
 	));
-}
-add_action( 'widgets_init', 'leopard_widgets_init' );
-
-
-// add_action( 'after_switch_theme',  'ajx_theme_locations_rescue' );
-function ajx_theme_locations_rescue() {
-   // bug report / support: http://www.unsalkorkmaz.com/
-   // We got old theme's slug name
-   $old_theme = get_option( 'theme_switched' );
-   // Getting old theme's settings
-   $old_theme_mods = get_option("theme_mods_{$old_theme}");
-   // Getting old theme's theme location settings
-   $old_theme_navs = $old_theme_mods['nav_menu_locations'];
-   // Getting new theme's theme location settings
-   $new_theme_navs = get_theme_mod( 'nav_menu_locations' );
-
-   // If new theme's theme location is empty (its not empty if theme was activated and set some theme locations before)
-   if (!$new_theme_navs) {
-	   // Getting registered theme locations on new theme
-	   $new_theme_locations = get_registered_nav_menus();
-
-	   foreach ($new_theme_locations as $location => $description ) {
-		   // We setting same nav menus for each theme location
-		   $new_theme_navs[$location] = $old_theme_navs[$location];
-	   }
-
-	   set_theme_mod( 'nav_menu_locations', $new_theme_navs );
-
-   }
 }

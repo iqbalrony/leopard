@@ -11,7 +11,8 @@
  * @param array $classes Classes for the body element.
  * @return array
  */
-function leopard_body_classes( $classes ) {
+add_filter( 'body_class', 'lprd_body_classes' );
+function lprd_body_classes( $classes ) {
 	// Adds a class of hfeed to non-singular pages.
 	if ( ! is_singular() ) {
 		$classes[] = 'hfeed';
@@ -24,14 +25,13 @@ function leopard_body_classes( $classes ) {
 
 	return $classes;
 }
-add_filter( 'body_class', 'leopard_body_classes' );
 
 /**
  * Add a pingback url auto-discovery header for single posts, pages, or attachments.
  */
-function leopard_pingback_header() {
+add_action( 'wp_head', 'lprd_pingback_header' );
+function lprd_pingback_header() {
 	if ( is_singular() && pings_open() ) {
 		printf( '<link rel="pingback" href="%s">', esc_url( get_bloginfo( 'pingback_url' ) ) );
 	}
 }
-add_action( 'wp_head', 'leopard_pingback_header' );

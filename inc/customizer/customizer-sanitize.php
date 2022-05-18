@@ -236,7 +236,7 @@ function lprd_featured_posts_active_callback( $control ) {
  *
  * @since 1.0.0
  */
-function is_related_showen( $control ) {
+function lprd_is_related_showen( $control ) {
     if ( $control->manager->get_setting('lprd_related_posts_option')->value() == 'show' ) {
        return true;
     } else {
@@ -249,7 +249,7 @@ function is_related_showen( $control ) {
  *
  * @since 1.0.0
  */
-function is_footer_showen( $control ) {
+function lprd_is_footer_showen( $control ) {
     if ( $control->manager->get_setting('lprd_footer_widget_option')->value() == 'show' ) {
        return true;
     } else {
