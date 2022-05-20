@@ -61,7 +61,7 @@
 						)
 					);
 					?>
-					<span class="screen-reader-text lprd-menu-close"><i class="fas fa-times"></i></span>
+					<button class="screen-reader-text lprd-menu-close"><i class="fas fa-times"></i></button>
 				</nav><!-- #site-navigation -->
 			</div>
 		</div>

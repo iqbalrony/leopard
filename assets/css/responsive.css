@@ -71,8 +71,11 @@
     font-size: 200px;
   }
 
-  button.screen-reader-text.lprd-menu-close:focus,
-  button.screen-reader-text.lprd-menu-close:focus-visible {
+  .screen-reader-text.lprd-menu-close{
+	  display: block;
+  }
+  .screen-reader-text.lprd-menu-close:focus,
+  .screen-reader-text.lprd-menu-close:focus-visible {
     display: block;
     position: relative !important;
     padding: 4px 10px;
