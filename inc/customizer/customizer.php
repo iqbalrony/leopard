@@ -35,7 +35,7 @@ add_action('customize_register', 'lprd_customize_register');
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function lprd_customize_preview_js() {
-	wp_enqueue_script('leopard-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array('customize-preview'), _S_VERSION, true);
+	wp_enqueue_script('leopard-customizer', get_template_directory_uri() . '/assets/js/customizer.js', array('customize-preview'), LPRD_VERSION, true);
 }
 
 add_action('customize_preview_init', 'lprd_customize_preview_js');

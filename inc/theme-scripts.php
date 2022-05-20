@@ -27,9 +27,9 @@ class LPRD_Enqueue_Scripts {
 		wp_enqueue_style( 'leopard-fonts', lprd_fonts_url(), [], null );
 
 		// Theme stylesheet.
-		wp_enqueue_style( 'leopard-style', get_stylesheet_uri(), [], _S_VERSION );
+		wp_enqueue_style( 'leopard-style', get_stylesheet_uri(), [], LPRD_VERSION );
 		// Add main stylesheet
-		wp_enqueue_style( 'leopard-main-style', get_template_directory_uri() . '/assets/css/leopard-style.css', [], _S_VERSION );
+		wp_enqueue_style( 'leopard-main-style', get_template_directory_uri() . '/assets/css/leopard-style.css', [], LPRD_VERSION );
 
 		// Add responsive stylesheet
 		wp_enqueue_style( 'leopard-responsive', get_template_directory_uri() . '/assets/css/responsive.css', [], null );
@@ -37,7 +37,7 @@ class LPRD_Enqueue_Scripts {
 		/**
 		 * Load All jQuery Library
 		 */
-		wp_enqueue_script( 'leopard-navigation', get_template_directory_uri() . '/assets/js/navigation.js', [], _S_VERSION, true );
+		wp_enqueue_script( 'leopard-navigation', get_template_directory_uri() . '/assets/js/navigation.js', [], LPRD_VERSION, true );
 
 		// Add leopard-main js library
 		wp_enqueue_script( 'leopard-main-js', get_template_directory_uri() . '/assets/js/leopard-main.js', ['jquery'], '', true );

@@ -7,10 +7,9 @@
  * @package Leopard
  */
 
-if ( ! defined( '_S_VERSION' ) ) {
+if ( ! defined( 'LPRD_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	// define( '_S_VERSION', '1.0.0' );
-	define( '_S_VERSION', time() );
+	define( 'LPRD_VERSION', '1.0.1' );
 }
 
 
