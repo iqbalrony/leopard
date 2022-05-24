@@ -140,7 +140,10 @@ if ( ! function_exists( 'lprd_posted_on' ) ){
 		$icon = '<i class="fas fa-clock"></i>';
 
 		$posted_on = sprintf(
-			'<a class="lprd--post-date-text" href="' . esc_url( get_permalink() ) . '" rel="bookmark">' . $icon . $time_string . '</a>'
+			'<a class="lprd--post-date-text" href="%s" rel="bookmark">%s%s</a>',
+			esc_url( get_permalink() ),
+			$icon,
+			$time_string
 		);
 
 		return $posted_on;
@@ -160,7 +163,10 @@ if ( ! function_exists( 'lprd_posted_by' ) ) {
 		$author_name = get_the_author_meta('display_name', $author_id);
 		$url = get_author_posts_url($author_id);
 		$byline = sprintf(
-			'<a class="lprd--post-author-text author vcard" href="' . esc_url( $url ) . '">' . $icon . esc_html( $author_name ) . '</a>'
+			'<a class="lprd--post-author-text author vcard" href="%s">%s%s</a>',
+			esc_url( $url ),
+			$icon,
+			esc_html( $author_name )
 		);
 
 		return $byline;
