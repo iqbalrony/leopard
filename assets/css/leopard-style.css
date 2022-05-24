@@ -952,6 +952,14 @@ textarea {
 
 .comment-content a {
   word-wrap: break-word;
+  text-decoration: underline;
+  color: var(--color-malibu);
+}
+
+.comment-content a:hover,
+.comment-content a:focus-visible {
+	text-decoration: none;
+	color: var(--color-outrageous-orange);
 }
 
 .bypostauthor {
