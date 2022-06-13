@@ -31,10 +31,11 @@
 						if($copyright_txt):
 							echo wpautop(lprd_allowed_html($copyright_txt));
 						?>
-						<?php
-						else:
-							print( esc_html__( 'Leopard', 'leopard' ) );
-						?>
+						<?php else: ?>
+							<?php
+							/* translators: 1: Theme name, 2: Theme author. */
+							printf( esc_html__( 'Theme: %1$s by %2$s', 'leopard' ), 'Leopard', '<a href="http://www.iqbalrony.com/">iqbalrony</a>' );
+							?>
 						<?php endif; ?>
 					</div><!-- .site-info -->
 				</div>

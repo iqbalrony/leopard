@@ -127,6 +127,8 @@ class LPRD_Enqueue_Scripts {
 		//Breadcrumb style
 		$breadcrumb_bg_img = get_theme_mod( 'lprd_breadcrumb_bg_img' );
 		$breadcrumb_bg_clr = get_theme_mod( 'lprd_breadcrumb_bg_clr' );
+		$breadcrumb_overlay_bg_clr = get_theme_mod( 'lprd_breadcrumb_overlay_bg_clr' );
+		$breadcrumb_overlay_opacity = get_theme_mod( 'lprd_breadcrumb_overlay_opacity' );
 		$breadcrumb_txt_clr = get_theme_mod( 'lprd_breadcrumb_txt_clr' );
 		$breadcrumb_txt_hvr_clr = get_theme_mod( 'lprd_breadcrumb_txt_hvr_clr' );
 		if ( ! empty( $breadcrumb_bg_img ) ) {
@@ -137,6 +139,16 @@ class LPRD_Enqueue_Scripts {
 		if ( ! empty( $breadcrumb_bg_clr ) ) {
 			$custom_css .= '
 					.lprd-breadcrumbs-area {background-color: ' . esc_attr( $breadcrumb_bg_clr ) . '; }
+				';
+		}
+		if ( ! empty( $breadcrumb_overlay_bg_clr ) ) {
+			$custom_css .= '
+					.lprd-breadcrumbs-area:after {background-color: ' . esc_attr( $breadcrumb_overlay_bg_clr ) . '; }
+				';
+		}
+		if ( ! empty( $breadcrumb_overlay_opacity ) ) {
+			$custom_css .= '
+					.lprd-breadcrumbs-area:after {opacity: ' . esc_attr( $breadcrumb_overlay_opacity ) . '; }
 				';
 		}
 		if ( ! empty( $breadcrumb_txt_clr ) ) {

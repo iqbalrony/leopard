@@ -6,10 +6,9 @@
  * @since 1.0.0
  */
 
-add_action('customize_register', 'lprd_breadcrumb_settings_register');
+add_action( 'customize_register', 'lprd_breadcrumb_settings_register' );
 
-function lprd_breadcrumb_settings_register($wp_customize) {
-
+function lprd_breadcrumb_settings_register( $wp_customize ) {
 
 	/**
 	 * Add Additional Settings Panel
@@ -19,10 +18,10 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_panel(
 		'lprd_breadcrumb_settings_panel',
 		array(
-			'priority' => 30,
-			'capability' => 'edit_theme_options',
+			'priority'       => 30,
+			'capability'     => 'edit_theme_options',
 			'theme_supports' => '',
-			'title' => __('Breadcrumb Settings', 'leopard'),
+			'title'          => __( 'Breadcrumb Settings', 'leopard' ),
 		)
 	);
 
@@ -34,32 +33,32 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_section(
 		'lprd_breadcrumb_section',
 		array(
-			'title' => __('Breadcrumb', 'leopard'),
-			'description' => __('Show/Hide option for breadcrumb.', 'leopard'),
-			'priority' => 5,
-			'panel' => 'lprd_breadcrumb_settings_panel',
+			'title'       => __( 'Breadcrumb', 'leopard' ),
+			'description' => __( 'Show/Hide option for breadcrumb.', 'leopard' ),
+			'priority'    => 5,
+			'panel'       => 'lprd_breadcrumb_settings_panel',
 		)
 	);
 
 	$wp_customize->add_setting(
 		'lprd_breadcrumb_on_off',
 		array(
-			'default' => 'show',
-			'transport'  => 'refresh',
+			'default'           => 'show',
+			'transport'         => 'refresh',
 			'sanitize_callback' => 'lprd_sanitize_switch_option',
 		)
 	);
 	$wp_customize->add_control(
 		'lprd_breadcrumb_on_off',
 		array(
-			'type' => 'select',
-			'label'     => esc_html__( 'Breadcrumb Area', 'leopard' ),
-			'description'   => esc_html__( 'Show/Hide option for breadcrumb.', 'leopard' ),
-			'section' => 'lprd_breadcrumb_section',
-			'priority' => 10,
-			'choices'   => array(
-				'show'  => esc_html__( 'Show', 'leopard' ),
-				'hide'  => esc_html__( 'Hide', 'leopard' )
+			'type'        => 'select',
+			'label'       => esc_html__( 'Breadcrumb Area', 'leopard' ),
+			'description' => esc_html__( 'Show/Hide option for breadcrumb.', 'leopard' ),
+			'section'     => 'lprd_breadcrumb_section',
+			'priority'    => 10,
+			'choices'     => array(
+				'show' => esc_html__( 'Show', 'leopard' ),
+				'hide' => esc_html__( 'Hide', 'leopard' ),
 			),
 		)
 	);
@@ -72,10 +71,10 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_section(
 		'lprd_breadcrumb_bg_section',
 		array(
-			'title' => __('Breadcrumb Background', 'leopard'),
-			'description' => __('Set the Breadcrumb background.', 'leopard'),
-			'priority' => 5,
-			'panel' => 'lprd_breadcrumb_settings_panel',
+			'title'           => __( 'Breadcrumb Background', 'leopard' ),
+			'description'     => __( 'Set the Breadcrumb background.', 'leopard' ),
+			'priority'        => 5,
+			'panel'           => 'lprd_breadcrumb_settings_panel',
 			'active_callback' => 'lprd_is_breadcrumb_show',
 		)
 	);
@@ -83,8 +82,8 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_setting(
 		'lprd_breadcrumb_bg_clr',
 		array(
-			'default' => '#f3f5fb',
-			'transport' => 'refresh',
+			'default'           => '#f3f5fb',
+			'transport'         => 'refresh',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -93,16 +92,61 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 			$wp_customize,
 			'lprd_breadcrumb_bg_clr',
 			array(
-				'label' => __('Breadcrumb Background Color', 'leopard'),
-				'section' => 'lprd_breadcrumb_bg_section',
+				'label'    => __( 'Breadcrumb Background Color', 'leopard' ),
+				'section'  => 'lprd_breadcrumb_bg_section',
 				'priority' => 10,
-			))
+			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'lprd_breadcrumb_overlay_bg_clr',
+		array(
+			'default'           => '',
+			'transport'         => 'refresh',
+			'sanitize_callback' => 'sanitize_hex_color',
+		)
+	);
+	$wp_customize->add_control(
+		new WP_Customize_Color_Control(
+			$wp_customize,
+			'lprd_breadcrumb_overlay_bg_clr',
+			array(
+				'label'    => __( 'Breadcrumb Overlay Color', 'leopard' ),
+				'section'  => 'lprd_breadcrumb_bg_section',
+				'priority' => 10,
+			)
+		)
+	);
+
+	$wp_customize->add_setting(
+		'lprd_breadcrumb_overlay_opacity',
+		array(
+			'default'           => '0.3',
+			'transport'         => 'refresh',
+			'sanitize_callback' => 'lprd_copyright_html',
+		)
+	);
+
+	$wp_customize->add_control(
+		'lprd_breadcrumb_overlay_opacity',
+		array(
+			'type'        => 'number',
+			'input_attrs' => array(
+				'min'  => 0,
+				'max'  => 1,
+				'step' => .1,
+			),
+			'label'       => __( 'Breadcrumb Overlay Opacity', 'leopard' ),
+			'section'     => 'lprd_breadcrumb_bg_section',
+			'priority'    => 10,
+		)
 	);
 
 	$wp_customize->add_setting(
 		'lprd_breadcrumb_bg_img',
 		array(
-			'default' => '',
+			'default'           => '',
 			'sanitize_callback' => 'esc_url_raw',
 		)
 	);
@@ -111,10 +155,11 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 			$wp_customize,
 			'lprd_breadcrumb_bg_img',
 			array(
-				'label'      => __( 'Breadcrumb Background Image', 'leopard' ),
-				'section'    => 'lprd_breadcrumb_bg_section',
-				'priority'   => 10,
-			) )
+				'label'    => __( 'Breadcrumb Background Image', 'leopard' ),
+				'section'  => 'lprd_breadcrumb_bg_section',
+				'priority' => 10,
+			)
+		)
 	);
 
 	/**
@@ -125,10 +170,10 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_section(
 		'lprd_breadcrumb_clr_section',
 		array(
-			'title' => __('Breadcrumb Color', 'leopard'),
-			'description' => __('Set the Breadcrumb Color.', 'leopard'),
-			'priority' => 5,
-			'panel' => 'lprd_breadcrumb_settings_panel',
+			'title'           => __( 'Breadcrumb Color', 'leopard' ),
+			'description'     => __( 'Set the Breadcrumb Color.', 'leopard' ),
+			'priority'        => 5,
+			'panel'           => 'lprd_breadcrumb_settings_panel',
 			'active_callback' => 'lprd_is_breadcrumb_show',
 		)
 	);
@@ -136,8 +181,8 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 	$wp_customize->add_setting(
 		'lprd_breadcrumb_txt_clr',
 		array(
-			'default' => '#0c1428',
-			'transport' => 'refresh',
+			'default'           => '#0c1428',
+			'transport'         => 'refresh',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -146,17 +191,18 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 			$wp_customize,
 			'lprd_breadcrumb_txt_clr',
 			array(
-				'label' => __('Breadcrumb Text Color', 'leopard'),
-				'section' => 'lprd_breadcrumb_clr_section',
+				'label'    => __( 'Breadcrumb Text Color', 'leopard' ),
+				'section'  => 'lprd_breadcrumb_clr_section',
 				'priority' => 10,
-			))
+			)
+		)
 	);
 
 	$wp_customize->add_setting(
 		'lprd_breadcrumb_txt_hvr_clr',
 		array(
-			'default' => '#8BA4F9',
-			'transport' => 'refresh',
+			'default'           => '#8BA4F9',
+			'transport'         => 'refresh',
 			'sanitize_callback' => 'sanitize_hex_color',
 		)
 	);
@@ -165,13 +211,11 @@ function lprd_breadcrumb_settings_register($wp_customize) {
 			$wp_customize,
 			'lprd_breadcrumb_txt_hvr_clr',
 			array(
-				'label' => __('Breadcrumb Anchor Hover Color', 'leopard'),
-				'section' => 'lprd_breadcrumb_clr_section',
+				'label'    => __( 'Breadcrumb Anchor Hover Color', 'leopard' ),
+				'section'  => 'lprd_breadcrumb_clr_section',
 				'priority' => 10,
-			))
+			)
+		)
 	);
-
-
-
 
 } //Footer panel close
