@@ -9,7 +9,7 @@
 
 if ( ! defined( 'LPRD_VERSION' ) ) {
 	// Replace the version number of the theme on each release.
-	define( 'LPRD_VERSION', '1.1.0' );
+	define( 'LPRD_VERSION', '1.1.1' );
 }
 
 
